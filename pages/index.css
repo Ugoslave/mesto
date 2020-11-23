@@ -169,3 +169,18 @@
   outline: none;
   margin-right: 17px;
 }
+
+.footer {
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.footer__copyright {
+  margin: 0;
+  padding: 66px 0 60px;
+  max-width: 318px;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 22px;
+  color: #545454;
+}
