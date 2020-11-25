@@ -22,9 +22,16 @@
   text-rendering: optimizeLegibility;
 }
 
-@media screen and (min-width: 320px) and (max-width: 425px) {
+@media screen and (min-width: 320px) and (max-width: 767px) {
   .page {
     padding: 28px 19px 0;
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  .page {
+    padding-right: 100px;
+    padding-left: 100px;
   }
 }
 
@@ -34,7 +41,7 @@
   min-height: 74px;
 }
 
-@media screen and (min-width: 320px) and (max-width: 425px) {
+@media screen and (min-width: 320px) and (max-width: 767px) {
   .header {
     min-height: 56px;
   }
@@ -45,7 +52,7 @@
   max-height: 33px;
 }
 
-@media screen and (min-width: 320px) and (max-width: 425px) {
+@media screen and (min-width: 320px) and (max-width: 767px) {
   .logo {
     max-width: 104px;
     max-height: 25px;
@@ -62,7 +69,7 @@
   padding-bottom: 54px;
 }
 
-@media screen and (min-width: 320px) and (max-width: 425px) {
+@media screen and (min-width: 320px) and (max-width: 1023px) {
   .profile {
     padding-top: 42px;
     flex-direction: column;
@@ -78,7 +85,7 @@
   align-items: center;
 }
 
-@media screen and (min-width: 320px) and (max-width: 425px) {
+@media screen and (min-width: 320px) and (max-width: 1023px) {
   .profile__info {
     flex-direction: column;
   }
@@ -97,7 +104,7 @@
   padding-left: 30px;
 }
 
-@media screen and (min-width: 320px) and (max-width: 425px) {
+@media screen and (min-width: 320px) and (max-width: 1023px) {
   .profile__title-box {
     width: 282px;
     padding-bottom: 36px;
@@ -113,13 +120,20 @@
   line-height: 48px;
 }
 
-@media screen and (min-width: 320px) and (max-width: 425px) {
+@media screen and (min-width: 320px) and (max-width: 1023px) {
   .profile__title {
     font-size: 27px;
     line-height: 33px;
     padding-top: 29px;
     text-align: center;
     
+  }
+}
+
+@media screen and (min-width: 1024px) and (max-width: 1279px) {
+  .profile__title {
+    font-size: 34px;
+    line-height: 42px;
   }
 }
 
@@ -131,7 +145,7 @@
   padding-top: 8px;
 }
 
-@media screen and (min-width: 320px) and (max-width: 425px) {
+@media screen and (min-width: 320px) and (max-width: 1023px) {
   .profile__subtitle {
     font-size: 14px;
     line-height: 17px;
@@ -152,13 +166,26 @@
   padding: 0;
   outline: none;
   margin-left: 23px;
+  transition: opacity .7s ease;
 }
 
-@media screen and (min-width: 320px) and (max-width: 425px) {
+.profile__edit-button:hover {
+  opacity: .6;
+  cursor: pointer;
+}
+
+@media screen and (min-width: 320px) and (max-width: 1023px) {
   .profile__edit-button {
     width: 18px;
     height: 18px;
     margin-left: 10px;
+  }
+}
+
+@media screen and (min-width: 1024px) and (max-width: 1279px) {
+  .profile__edit-button {
+    width: 20px;
+    height: 20px;
   }
 }
 
@@ -172,9 +199,15 @@
   height: 50px;
   padding: 0;
   outline: none;
+  transition: opacity .7s ease;
 }
 
-@media screen and (min-width: 320px) and (max-width: 425px) {
+.profile__add-button:hover {
+  opacity: .6;
+  cursor: pointer;
+}
+
+@media screen and (min-width: 320px) and (max-width: 1023px) {
   .profile__add-button {
     background-image: url('../images/profile-AddButton-mobile.png');
     width: 282px;
@@ -196,10 +229,17 @@
   row-gap: 20px;
 }
 
-@media screen and (min-width: 320px) and (max-width: 425px) {
+@media screen and (min-width: 320px) and (max-width: 767px) {
   .elements {
     grid-template-columns: 1fr;
     grid-template-rows: repeat(6, 1fr);
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1279px) {
+  .elements {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, 1fr);
   }
 }
 
@@ -275,7 +315,7 @@
   color: #545454;
 }
 
-@media screen and (min-width: 320px) and (max-width: 425px) {
+@media screen and (min-width: 320px) and (max-width: 767px) {
   .footer__copyright {
     font-size: 14px;
     line-height: 17px;
@@ -311,7 +351,7 @@
   margin-bottom: 40px;
 }
 
-@media screen and (min-width: 320px) and (max-width: 425px) {
+@media screen and (min-width: 320px) and (max-width: 767px) {
   .popup__container {
     max-width: 282px;
     min-height: 330px;
@@ -328,9 +368,15 @@
   padding: 0;
   outline: none;
   align-self: flex-start;
+  transition: opacity .7s ease;
 }
 
-@media screen and (min-width: 320px) and (max-width: 425px) {
+.popup__button-close:hover {
+  opacity: .6;
+  cursor: pointer;
+}
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
   .popup__button-close {
     align-self: flex-end;
     margin-right: 5px;
@@ -345,7 +391,7 @@
   object-fit: none;
 }
 
-@media screen and (min-width: 320px) and (max-width: 425px) {
+@media screen and (min-width: 320px) and (max-width: 767px) {
   .popup__button-image {
     width: 26px;
     height: 26px;
@@ -364,7 +410,7 @@
   margin-bottom: 5px;
 }
 
-@media screen and (min-width: 320px) and (max-width: 425px) {
+@media screen and (min-width: 320px) and (max-width: 767px) {
   .popup__form-box {
     width: 282px;
     min-height: 322px;
@@ -381,7 +427,7 @@
   line-height: 29px;
 }
 
-@media screen and (min-width: 320px) and (max-width: 425px) {
+@media screen and (min-width: 320px) and (max-width: 767px) {
   .popup__title {
     padding: 25px 22px 75px;
     max-width: 238px;
@@ -395,7 +441,7 @@
   margin: 0;
 }
 
-@media screen and (min-width: 320px) and (max-width: 425px) {
+@media screen and (min-width: 320px) and (max-width: 767px) {
   .popup__form {
     max-width: 238px;
   }
@@ -415,7 +461,7 @@
   line-height: 17px;
 }
 
-@media screen and (min-width: 320px) and (max-width: 425px) {
+@media screen and (min-width: 320px) and (max-width: 767px) {
   .popup__input {
     width: 238px;
     margin-right: 22px;
@@ -438,9 +484,16 @@
   font-size: 18px;
   line-height: 22px;
   text-align: center;
+  border-radius: 2px;
+  transition: opacity .7s ease;
 }
 
-@media screen and (min-width: 320px) and (max-width: 425px) {
+.popup__button-save:hover {
+  opacity: .8;
+  cursor: pointer;
+}
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
   .popup__button-save {
     width: 238px;
     height: 46px;
