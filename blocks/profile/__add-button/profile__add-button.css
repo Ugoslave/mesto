@@ -1,5 +1,5 @@
 .profile__add-button {
-  background-image: url('../../../images/profile-addButton.png');
+  background-image: url('../../../images/profile-addButton.svg');
   background-color: transparent;
   background-size: cover;
   background-position: center;
@@ -8,6 +8,7 @@
   height: 50px;
   padding: 0;
   outline: none;
+  border-radius: 2px;
   transition: opacity .7s ease;
 }
 
@@ -18,9 +19,8 @@
 
 @media screen and (min-width: 320px) and (max-width: 1023px) {
   .profile__add-button {
-    background-image: url('../../../images/profile-AddButton-mobile.png');
+    background-image: url('../../../images/profile-AddButton-mobile.svg');
     width: 282px;
-    margin-top: 47px;
     margin-bottom: 36px;
   }
 }
