@@ -83,11 +83,30 @@ composeListCard();
 const addButton = document.querySelector('.profile__add-button');
 const addElementPopup = document.querySelector('.popup_content_add-element');
 const closeButtonAddElementPopup = document.querySelector('.popup__button-close_place_add-element');
+const inputTitle = document.querySelector('.popup__input_data_title'); // выбираем в проекте класс первого поля ввода формы в "Попап-окне";
+const inputLink = document.querySelector('.popup__input_data_link'); // выбираем в проекте класс первого поля ввода формы в "Попап-окне";
+const newElementForm = document.querySelector('.popup__form_place_add-element');
 
 function openAddElementPopup() { // объявляем функцию, реализующую открытие "Попап-окна";
   addElementPopup.classList.add('popup_active'); // добавляем классу "Попап-окна" модификатор, реализующий видимость блока;
-
+  inputTitle.value = '';
+  inputLink.value = '';
+  inputTitle.placeholder = 'Название';
+  inputLink.placeholder = 'Ссылка на картинку';
 }
 
 addButton.addEventListener('click', openAddElementPopup);
 closeButtonAddElementPopup.addEventListener('click', сlosePopup.bind(this, addElementPopup));
+
+
+function handleAddElementFormSubmit(evt) {
+  evt.preventDefault(); // отменяем стандартную отправку формы;
+  const NewCardTitle = inputTitle.value;
+  const NewCardLink = inputLink.value;
+  const NewElement = composeCard({ name: NewCardTitle, link: NewCardLink });
+  cardsContainer.prepend(NewElement);
+  сlosePopup(addElementPopup);
+}
+
+newElementForm.addEventListener('submit', handleAddElementFormSubmit);
+
