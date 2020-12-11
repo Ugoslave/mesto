@@ -34,40 +34,51 @@ form.addEventListener('submit', handleFormSubmit); // подключаем "сл
 
 const initialCards = [
   {
-      name: 'Индонезия',
-      link: 'https://images.unsplash.com/photo-1604999286549-9775ca576cd3?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80'
+    name: 'Индонезия',
+    link: 'https://images.unsplash.com/photo-1604999286549-9775ca576cd3?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80'
   },
   {
-      name: 'Италия',
-      link: 'https://images.unsplash.com/photo-1605609476793-3015923b4be1?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=613&q=80'
+    name: 'Италия',
+    link: 'https://images.unsplash.com/photo-1605609476793-3015923b4be1?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=613&q=80'
   },
   {
-      name: 'Бельгия',
-      link: 'https://images.unsplash.com/photo-1605695497065-825816481772?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80'
+    name: 'Бельгия',
+    link: 'https://images.unsplash.com/photo-1605695497065-825816481772?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80'
   },
   {
-      name: 'Новая Зеландия',
-      link: 'https://images.unsplash.com/photo-1590002893558-64f0d58dcca4?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80'
+    name: 'Новая Зеландия',
+    link: 'https://images.unsplash.com/photo-1590002893558-64f0d58dcca4?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80'
   },
   {
-      name: 'Уругвай',
-      link: 'https://images.unsplash.com/photo-1603229076753-cfac689136c9?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=675&q=80'
+    name: 'Уругвай',
+    link: 'https://images.unsplash.com/photo-1603229076753-cfac689136c9?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=675&q=80'
   },
   {
-      name: 'Фарерские острова',
-      link: 'https://images.unsplash.com/photo-1603104144902-8a46f21ca4c5?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80'
+    name: 'Фарерские острова',
+    link: 'https://images.unsplash.com/photo-1603104144902-8a46f21ca4c5?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80'
   }
 ];
 
-const templateElement = document.querySelector('.card').content;
+const templateElement = document.querySelector('.card');
 const cardsContainer = document.querySelector('.elements');
+const addButton = document.querySelector('.profile__add-button');
+const addElementPopup = document.querySelector('.popup_content_add-element');
+const closeButtonAddElementPopup = document.querySelector('.popup__button-close_place_add-element');
+const inputTitle = document.querySelector('.popup__input_data_title'); // выбираем в проекте класс первого поля ввода формы в "Попап-окне";
+const inputLink = document.querySelector('.popup__input_data_link'); // выбираем в проекте класс первого поля ввода формы в "Попап-окне";
+const newElementForm = document.querySelector('.popup__form_place_add-element');
+const removeButton = document.querySelector('.element__remove-button');
+
 
 function composeCard(item) {
-  const card = templateElement.cloneNode(true);
+  const card = templateElement.content.cloneNode(true);
   const headerCard = card.querySelector('.element__title');
   const imageCard = card.querySelector('.element__image');
+  /*removeButton.addEventListener('click', removeCard);*/
+  
   headerCard.textContent = item.name;
   imageCard.src = item.link;
+
   return card;
 }
 
@@ -76,28 +87,29 @@ function composeListCard() {
   cardsContainer.append(...listCards);
 }
 
+function removeCard(evt) {
+  const targetElement = evt.target.closest('.element');
+  targetElement.remove();
+}
+
 composeListCard();
 
 
 
-const addButton = document.querySelector('.profile__add-button');
-const addElementPopup = document.querySelector('.popup_content_add-element');
-const closeButtonAddElementPopup = document.querySelector('.popup__button-close_place_add-element');
-const inputTitle = document.querySelector('.popup__input_data_title'); // выбираем в проекте класс первого поля ввода формы в "Попап-окне";
-const inputLink = document.querySelector('.popup__input_data_link'); // выбираем в проекте класс первого поля ввода формы в "Попап-окне";
-const newElementForm = document.querySelector('.popup__form_place_add-element');
 
-function openAddElementPopup() { // объявляем функцию, реализующую открытие "Попап-окна";
+
+
+
+
+
+
+/*function openAddElementPopup() { // объявляем функцию, реализующую открытие "Попап-окна";
   addElementPopup.classList.add('popup_active'); // добавляем классу "Попап-окна" модификатор, реализующий видимость блока;
   inputTitle.value = '';
   inputLink.value = '';
   inputTitle.placeholder = 'Название';
   inputLink.placeholder = 'Ссылка на картинку';
 }
-
-addButton.addEventListener('click', openAddElementPopup);
-closeButtonAddElementPopup.addEventListener('click', сlosePopup.bind(this, addElementPopup));
-
 
 function handleAddElementFormSubmit(evt) {
   evt.preventDefault(); // отменяем стандартную отправку формы;
@@ -106,7 +118,9 @@ function handleAddElementFormSubmit(evt) {
   const NewElement = composeCard({ name: NewCardTitle, link: NewCardLink });
   cardsContainer.prepend(NewElement);
   сlosePopup(addElementPopup);
-}
+}*/
 
-newElementForm.addEventListener('submit', handleAddElementFormSubmit);
 
+/*addButton.addEventListener('click', openAddElementPopup);
+closeButtonAddElementPopup.addEventListener('click', сlosePopup.bind(this, addElementPopup));
+newElementForm.addEventListener('submit', handleAddElementFormSubmit);*/

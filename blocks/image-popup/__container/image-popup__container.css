@@ -1,0 +1,13 @@
+.image-popup__container {
+  display: flex;
+  flex-direction: row-reverse;
+  margin-bottom: 4vh;
+  margin-left: 4.1vw;
+}
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+  .image-popup__container {
+    margin-bottom: 2vh;
+    margin-left: 8vw;
+  }
+}
