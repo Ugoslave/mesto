@@ -1,38 +1,25 @@
-let editButton = document.querySelector('.profile__edit-button'); // выбираем в проекте класс кнопки "Войти";
-let closeButton = document.querySelector('.popup__button-close'); // выбираем в проекте класс кнопки "Закрыть";
-let popup = document.querySelector('.popup'); // выбираем в проекте класс "Попап-окна";
-let form = document.querySelector('.popup__form'); // выбираем в проекте класс формы в "Попап-окне";
-let inputName = form.querySelector('.popup__input_data_name'); // выбираем в проекте класс первого поля ввода формы в "Попап-окне";
-let inputAbout = form.querySelector('.popup__input_data_about-yourself'); // выбираем в проекте класс второго поля ввода формы в "Попап-окне";
-let profileTitle = document.querySelector('.profile__title'); // выбираем в проекте класс заголовка секции "Профиль";
-let profileSubtitle = document.querySelector('.profile__subtitle'); // выбираем в проекте класс подзаголовка секции "Профиль";
+const editButton = document.querySelector('.profile__edit-button'); // выбираем в проекте класс кнопки "Войти";
+const closeButton = document.querySelector('.popup__button-close'); // выбираем в проекте класс кнопки "Закрыть";
+const popup = document.querySelector('.popup'); // выбираем в проекте класс "Попап-окна";
+const form = document.querySelector('.popup__form'); // выбираем в проекте класс формы в "Попап-окне";
+const inputName = form.querySelector('.popup__input_data_name'); // выбираем в проекте класс первого поля ввода формы в "Попап-окне";
+const inputAbout = form.querySelector('.popup__input_data_about-yourself'); // выбираем в проекте класс второго поля ввода формы в "Попап-окне";
+const profileTitle = document.querySelector('.profile__title'); // выбираем в проекте класс заголовка секции "Профиль";
+const profileSubtitle = document.querySelector('.profile__subtitle'); // выбираем в проекте класс подзаголовка секции "Профиль";
+const templateElement = document.querySelector('.card'); // выбираем в проекте класс шаблона секции изображений;
+const cardsContainer = document.querySelector('.elements'); // выбираем класс списка изображений в шаблоне;
+const addButton = document.querySelector('.profile__add-button'); // выбираем в проекте класс кнопки "Добавить";
+const addElementPopup = document.querySelector('.popup_content_add-element'); // выбираем в проекте модификатор "Попап-окна";
+const closeButtonAddElementPopup = document.querySelector('.popup__button-close_place_add-element'); // выбираем в проекте модификатор кнопки "Закрыть";
+const inputTitle = document.querySelector('.popup__input_data_title'); // выбираем в проекте класс поля ввода "Название" формы в попап-окне "Добавить элемент";
+const inputLink = document.querySelector('.popup__input_data_link'); // выбираем в проекте класс второго поля ввода "Ссылка" формы в попап-окне "Добавить элемент";
+const newElementForm = document.querySelector('.popup__form_place_add-element'); // выбираем в проекте модификатор формы в "Попап-окне";
+const imagePopup = document.querySelector('.image-popup'); // выбираем в проекте класс "Попап-окна";
+const photoImagePopup = document.querySelector('.image-popup__image'); // выбираем в проекте класс изображения "Попап-окна";
+const captionImagePopup = document.querySelector('.image-popup__caption'); // выбираем в проекте класс подписи к изображению "Попап-окна";
+const closeButtonImagePopup = document.querySelector('.image-popup__close-button'); // выбираем в проекте класс кнопки "Закрыть";
 
-function openPopup() { // объявляем функцию, реализующую открытие "Попап-окна";
-  popup.classList.add('popup_active'); // добавляем классу "Попап-окна" модификатор, реализующий видимость блока;
-  inputName.value = profileTitle.textContent; // присваиваем полю ввода "Имя" формы "Попап-окна" текстовое содержимое заголовка секции "Профиль";
-  inputAbout.value = profileSubtitle.textContent; // присваиваем полю ввода "О себе" формы "Попап-окна" текстовое содержимое подзаголовка секции "Профиль";
-}
-
-function сlosePopup(item, htmlClass) { // объявляем функцию, реализующую закрытие "Попап-окна";
-  item.classList.remove(htmlClass); // удаляем у класса "Попап-окна" модификатор, реализующий видимость блока;
-}
-
-function handleFormSubmit(evt) { // объявляем функцию, реализующую сохранение значений полей ввода данных и отправку формы;
-  evt.preventDefault(); // отменяем стандартную отправку формы;
-  profileTitle.textContent = inputName.value; // заменяем текстовое содержимое заголовка секции "Профиль" значением поля ввода "Имя" формы "Попап-окна";
-  profileSubtitle.textContent = inputAbout.value; // заменяем текстовое содержимое подзаголовка секции "Профиль" значением поля ввода "О себе" формы "Попап-окна";
-  сlosePopup(popup, 'popup_active'); // реализуем автоматическое закрытие "Попап-окна";
-}
-
-editButton.addEventListener('click', openPopup); // подключаем "слушатель", вызывающий функцию openClosePopup, на кнопку "Войти";
-closeButton.addEventListener('click', сlosePopup.bind(this, popup, 'popup_active')); // подключаем "слушатель", вызывающий функцию openClosePopup, на кнопку "Закрыть";
-form.addEventListener('submit', handleFormSubmit); // подключаем "слушатель", вызывающий функцию handleFormSubmit при нажатии на кнопку "Сохранить", на форму "Попап-окна";
-
-
-//ПРОБУЕМ ПОНЯТЬ И СДЕЛАТЬ ХОТЬ ЧТО-ТО!!!!!// 
-
-
-const initialCards = [
+const initialCards = [ // присваиваем переменной массив, содержащий объекты с данными, необходимыми для формирования карточек с изображением;
   {
     name: 'Индонезия',
     link: 'https://images.unsplash.com/photo-1604999286549-9775ca576cd3?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80'
@@ -59,79 +46,81 @@ const initialCards = [
   }
 ];
 
-const templateElement = document.querySelector('.card');
-const cardsContainer = document.querySelector('.elements');
-const addButton = document.querySelector('.profile__add-button');
-const addElementPopup = document.querySelector('.popup_content_add-element');
-const closeButtonAddElementPopup = document.querySelector('.popup__button-close_place_add-element');
-const inputTitle = document.querySelector('.popup__input_data_title'); // выбираем в проекте класс первого поля ввода формы в "Попап-окне";
-const inputLink = document.querySelector('.popup__input_data_link'); // выбираем в проекте класс первого поля ввода формы в "Попап-окне";
-const newElementForm = document.querySelector('.popup__form_place_add-element');
-const imagePopup = document.querySelector('.image-popup');
-const photoImagePopup = document.querySelector('.image-popup__image');
-const captionImagePopup = document.querySelector('.image-popup__caption');
-const closeButtonImagePopup = document.querySelector('.image-popup__close-button');
-
-
-
-function composeCard(item) {
-  const card = templateElement.content.cloneNode(true);
-  const headerCard = card.querySelector('.element__title');
-  const imageCard = card.querySelector('.element__image');
-  const removeButton = card.querySelector('.element__remove-button');
-  const likeButton = card.querySelector('.element__button');
-  likeButton.addEventListener('click', changeLikeButtonColor);
-  removeButton.addEventListener('click', removeCard);
-  headerCard.textContent = item.name;
-  imageCard.src = item.link;
-  imageCard.addEventListener('click', openImagePopup);
-  return card;
-}
-
-
-
-function composeListCard() {
-  const listCards = initialCards.map(composeCard);
-  
-  cardsContainer.append(...listCards);
-}
-
-function removeCard(evt) {
-  const targetElement = evt.target.closest('.element');
-  targetElement.remove();
+function openPopup() { // объявляем функцию, реализующую открытие "Попап-окна";
+  popup.classList.add('popup_active'); // добавляем классу "Попап-окна" модификатор, реализующий видимость блока;
+  inputName.value = profileTitle.textContent; // присваиваем полю ввода "Имя" формы "Попап-окна" текстовое содержимое заголовка секции "Профиль";
+  inputAbout.value = profileSubtitle.textContent; // присваиваем полю ввода "О себе" формы "Попап-окна" текстовое содержимое подзаголовка секции "Профиль";
 }
 
 function openAddElementPopup() { // объявляем функцию, реализующую открытие "Попап-окна";
   addElementPopup.classList.add('popup_active'); // добавляем классу "Попап-окна" модификатор, реализующий видимость блока;
-  inputTitle.value = '';
+  inputTitle.value = ''; // присваиваем полям ввода пустую строку при открытии попапа;
   inputLink.value = '';
-  inputTitle.placeholder = 'Название';
+  inputTitle.placeholder = 'Название'; // присваиваем полям ввода "подсказки" при открытии попапа;
   inputLink.placeholder = 'Ссылка на картинку';
 }
 
-function handleAddElementFormSubmit(evt) {
+function сlosePopup(item, htmlClass) { // объявляем функцию с аргументами, реализующую закрытие любого "Попап-окна";
+  item.classList.remove(htmlClass); // удаляем у класса "Попап-окна" модификатор, реализующий видимость блока;
+}
+
+function handleFormSubmit(evt) { // объявляем функцию, реализующую сохранение значений полей ввода данных и отправку формы;
   evt.preventDefault(); // отменяем стандартную отправку формы;
-  const NewCardTitle = inputTitle.value;
-  const NewCardLink = inputLink.value;
-  const NewElement = composeCard({ name: NewCardTitle, link: NewCardLink });
-  cardsContainer.prepend(NewElement);
-  сlosePopup(addElementPopup, 'popup_active');
+  profileTitle.textContent = inputName.value; // заменяем текстовое содержимое заголовка секции "Профиль" значением поля ввода "Имя" формы "Попап-окна";
+  profileSubtitle.textContent = inputAbout.value; // заменяем текстовое содержимое подзаголовка секции "Профиль" значением поля ввода "О себе" формы "Попап-окна";
+  сlosePopup(popup, 'popup_active'); // реализуем автоматическое закрытие "Попап-окна";
 }
 
-function openImagePopup(evt) {
-  const captionValue = evt.target.closest('.element');
-  imagePopup.classList.add('image-popup_visible'); 
-  photoImagePopup.src = evt.target.src;
-  captionImagePopup.textContent = captionValue.textContent;
+function composeCard(item) { // объявляем функцию, формирующую из шаблона в проекте стандарную карточку с изображением, подписью и кнопками;
+  const card = templateElement.content.cloneNode(true); // клонируем содержимое шаблона в проекте;
+  const headerCard = card.querySelector('.element__title'); // присваиваем переменной класс узла "Заголовок карточки";
+  const imageCard = card.querySelector('.element__image'); // присваиваем переменной класс узла "Изображение карточки";
+  const removeButton = card.querySelector('.element__remove-button'); // присваиваем переменной класс узла "Кнопка удаления карточки";
+  const likeButton = card.querySelector('.element__button'); // присваиваем переменной класс узла "Кнопка Лайк";
+  likeButton.addEventListener('click', changeLikeButtonColor); // подключаем "слушатель", вызывающий функцию "changeLikeButtonColor" при нажатии на кнопку "Лайк";
+  removeButton.addEventListener('click', removeCard); // подключаем "слушатель", вызывающий функцию "removeCard" при нажатии на кнопку "Удалить карточку";
+  headerCard.textContent = item.name; // присваиваем текстовому содержимому узла "Заголовок карточки" значение ключа "Имя" из заданного массива;
+  imageCard.src = item.link; // присваиваем атрибуту узла "Изображение карточки" значение ключа "Ссылка" из заданного массива;
+  imageCard.addEventListener('click', openImagePopup); // подключаем "слушатель", вызывающий функцию "openImagePopup" при нажатии на изображение карточки;
+  return card; // возвращаем в функцию значение сформированной карточки;
 }
 
-function changeLikeButtonColor(evt) {
-  evt.target.classList.toggle('element__button_active');
+function composeListCard() { // объявляем функцию, формирующую из заданного массива список карточек с изображением, подписью и кнопками;
+  const listCards = initialCards.map(composeCard); // присваиваем переменной массив, сформированный из исходного массива и преобразованный с помощью функции "composeCard";
+  cardsContainer.append(...listCards); // вставляем в проект полученный массив и раскладываем его на аргументы;
 }
 
-composeListCard();
+function removeCard(evt) { // объявляем функцию, реализующую удаление карточки из списка;
+  const targetElement = evt.target.closest('.element'); // присваиваем переменной класс карточки, по кнопке удаления которой кликнул пользователь;
+  targetElement.remove(); // удаляем карточку, по кнопке которой кликнул пользователь;
+}
 
-addButton.addEventListener('click', openAddElementPopup);
-closeButtonAddElementPopup.addEventListener('click', сlosePopup.bind(this, addElementPopup, 'popup_active'));
-newElementForm.addEventListener('submit', handleAddElementFormSubmit);
-closeButtonImagePopup.addEventListener('click', сlosePopup.bind(this, imagePopup, 'image-popup_visible'));
+function handleAddElementFormSubmit(evt) { // объявляем функцию, реализующую сохранение значений полей ввода данных и создание новой карточки;
+  evt.preventDefault(); // отменяем стандартную отправку формы;
+  const NewCardTitle = inputTitle.value; // присваиваем переменной значение, введенноё пользователем в поле "Название";
+  const NewCardLink = inputLink.value; // присваиваем переменной значение, введенноё пользователем в поле "Ссылка";
+  const NewElement = composeCard({ name: NewCardTitle, link: NewCardLink }); // присваиваем переменной значение новой сформированной карточки;
+  cardsContainer.prepend(NewElement); // вставляем новую карточку в начало списка;
+  сlosePopup(addElementPopup, 'popup_active'); // закрываем попап-окно;
+}
+
+function openImagePopup(evt) { // объявляем функцию, реализующую открытие попап-окна для просмотра выбранного изображения;
+  const captionValue = evt.target.closest('.element'); // присваиваем переменной класс карточки, по изображению которой кликнул пользователь;
+  imagePopup.classList.add('image-popup_visible'); // добавляем классу "Попап-окна" модификатор, реализующий видимость блока;
+  photoImagePopup.src = evt.target.src; // присваиваем атрибуту изображения попап-окна значение атрибута выбранного изображения карточки;
+  captionImagePopup.textContent = captionValue.textContent; // присваиваем текстовому содержимому подписи к изображению попап-окна текстовое содержимое заголовка выбранной карточки;
+}
+
+function changeLikeButtonColor(evt) { // объявляем функцию, реализующую нажатие кнопки "Лайк" выбранного изображения;
+  evt.target.classList.toggle('element__button_active'); // добавляем классу кнопки "Лайк" модификатор, реализующий изменение цвета кнопки по клику пользователя;
+}
+
+composeListCard(); // вызываем функцию для формирования карточек при загрузке страницы;
+
+addButton.addEventListener('click', openAddElementPopup); // подключаем "слушатель", вызывающий функцию "openAddElementPopup" при нажатии на кнопку "Добавить элемент";
+closeButtonAddElementPopup.addEventListener('click', сlosePopup.bind(this, addElementPopup, 'popup_active')); // подключаем "слушатель", вызывающий функцию "сlosePopup" при нажатии на кнопку "Закрыть";
+newElementForm.addEventListener('submit', handleAddElementFormSubmit); // подключаем "слушатель", вызывающий функцию handleAddElementFormSubmit при нажатии на кнопку "Создать";
+closeButtonImagePopup.addEventListener('click', сlosePopup.bind(this, imagePopup, 'image-popup_visible')); // подключаем "слушатель", вызывающий функцию "сlosePopup" при нажатии на кнопку "Закрыть";
+editButton.addEventListener('click', openPopup); // подключаем "слушатель", вызывающий функцию openClosePopup при нажатии на кнопку "Войти";
+closeButton.addEventListener('click', сlosePopup.bind(this, popup, 'popup_active')); // подключаем "слушатель", вызывающий функцию "сlosePopup" при нажатии на кнопку "Закрыть";
+form.addEventListener('submit', handleFormSubmit); // подключаем "слушатель", вызывающий функцию handleFormSubmit при нажатии на кнопку "Сохранить";
