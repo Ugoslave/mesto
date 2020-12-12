@@ -25,5 +25,5 @@
 }
 
 .element__button:focus {
-  animation: scale .4s ease 1 reverse backwards;
+  animation: scale .3s ease 1 reverse backwards;
 }
