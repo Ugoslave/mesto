@@ -2,3 +2,7 @@
   margin: 0;
   max-width: 100%;
 }
+
+.element__image:hover {
+  cursor: pointer;
+}

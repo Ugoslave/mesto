@@ -13,19 +13,19 @@ function openPopup() { // объявляем функцию, реализующ�
   inputAbout.value = profileSubtitle.textContent; // присваиваем полю ввода "О себе" формы "Попап-окна" текстовое содержимое подзаголовка секции "Профиль";
 }
 
-function сlosePopup(item) { // объявляем функцию, реализующую закрытие "Попап-окна";
-  item.classList.remove('popup_active'); // удаляем у класса "Попап-окна" модификатор, реализующий видимость блока;
+function сlosePopup(item, htmlClass) { // объявляем функцию, реализующую закрытие "Попап-окна";
+  item.classList.remove(htmlClass); // удаляем у класса "Попап-окна" модификатор, реализующий видимость блока;
 }
 
 function handleFormSubmit(evt) { // объявляем функцию, реализующую сохранение значений полей ввода данных и отправку формы;
   evt.preventDefault(); // отменяем стандартную отправку формы;
   profileTitle.textContent = inputName.value; // заменяем текстовое содержимое заголовка секции "Профиль" значением поля ввода "Имя" формы "Попап-окна";
   profileSubtitle.textContent = inputAbout.value; // заменяем текстовое содержимое подзаголовка секции "Профиль" значением поля ввода "О себе" формы "Попап-окна";
-  сlosePopup(popup); // реализуем автоматическое закрытие "Попап-окна";
+  сlosePopup(popup, 'popup_active'); // реализуем автоматическое закрытие "Попап-окна";
 }
 
 editButton.addEventListener('click', openPopup); // подключаем "слушатель", вызывающий функцию openClosePopup, на кнопку "Войти";
-closeButton.addEventListener('click', сlosePopup.bind(this, popup)); // подключаем "слушатель", вызывающий функцию openClosePopup, на кнопку "Закрыть";
+closeButton.addEventListener('click', сlosePopup.bind(this, popup, 'popup_active')); // подключаем "слушатель", вызывающий функцию openClosePopup, на кнопку "Закрыть";
 form.addEventListener('submit', handleFormSubmit); // подключаем "слушатель", вызывающий функцию handleFormSubmit при нажатии на кнопку "Сохранить", на форму "Попап-окна";
 
 
@@ -67,23 +67,32 @@ const closeButtonAddElementPopup = document.querySelector('.popup__button-close_
 const inputTitle = document.querySelector('.popup__input_data_title'); // выбираем в проекте класс первого поля ввода формы в "Попап-окне";
 const inputLink = document.querySelector('.popup__input_data_link'); // выбираем в проекте класс первого поля ввода формы в "Попап-окне";
 const newElementForm = document.querySelector('.popup__form_place_add-element');
-const removeButton = document.querySelector('.element__remove-button');
+const imagePopup = document.querySelector('.image-popup');
+const photoImagePopup = document.querySelector('.image-popup__image');
+const captionImagePopup = document.querySelector('.image-popup__caption');
+const closeButtonImagePopup = document.querySelector('.image-popup__close-button');
+
 
 
 function composeCard(item) {
   const card = templateElement.content.cloneNode(true);
   const headerCard = card.querySelector('.element__title');
   const imageCard = card.querySelector('.element__image');
-  /*removeButton.addEventListener('click', removeCard);*/
-  
+  const removeButton = card.querySelector('.element__remove-button');
+  const likeButton = card.querySelector('.element__button');
+  likeButton.addEventListener('click', changeLikeButtonColor);
+  removeButton.addEventListener('click', removeCard);
   headerCard.textContent = item.name;
   imageCard.src = item.link;
-
+  imageCard.addEventListener('click', openImagePopup);
   return card;
 }
 
+
+
 function composeListCard() {
   const listCards = initialCards.map(composeCard);
+  
   cardsContainer.append(...listCards);
 }
 
@@ -92,18 +101,7 @@ function removeCard(evt) {
   targetElement.remove();
 }
 
-composeListCard();
-
-
-
-
-
-
-
-
-
-
-/*function openAddElementPopup() { // объявляем функцию, реализующую открытие "Попап-окна";
+function openAddElementPopup() { // объявляем функцию, реализующую открытие "Попап-окна";
   addElementPopup.classList.add('popup_active'); // добавляем классу "Попап-окна" модификатор, реализующий видимость блока;
   inputTitle.value = '';
   inputLink.value = '';
@@ -117,10 +115,23 @@ function handleAddElementFormSubmit(evt) {
   const NewCardLink = inputLink.value;
   const NewElement = composeCard({ name: NewCardTitle, link: NewCardLink });
   cardsContainer.prepend(NewElement);
-  сlosePopup(addElementPopup);
-}*/
+  сlosePopup(addElementPopup, 'popup_active');
+}
 
+function openImagePopup(evt) {
+  const captionValue = evt.target.closest('.element');
+  imagePopup.classList.add('image-popup_visible'); 
+  photoImagePopup.src = evt.target.src;
+  captionImagePopup.textContent = captionValue.textContent;
+}
 
-/*addButton.addEventListener('click', openAddElementPopup);
-closeButtonAddElementPopup.addEventListener('click', сlosePopup.bind(this, addElementPopup));
-newElementForm.addEventListener('submit', handleAddElementFormSubmit);*/
+function changeLikeButtonColor(evt) {
+  evt.target.classList.toggle('element__button_active');
+}
+
+composeListCard();
+
+addButton.addEventListener('click', openAddElementPopup);
+closeButtonAddElementPopup.addEventListener('click', сlosePopup.bind(this, addElementPopup, 'popup_active'));
+newElementForm.addEventListener('submit', handleAddElementFormSubmit);
+closeButtonImagePopup.addEventListener('click', сlosePopup.bind(this, imagePopup, 'image-popup_visible'));
