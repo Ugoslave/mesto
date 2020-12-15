@@ -93,10 +93,9 @@ function handleAddElementFormSubmit(evt) { // объявляем функцию,
 
 function removeCard(evt) { // объявляем функцию, реализующую удаление карточки из списка;
   const targetElement = evt.target.closest('.element'); // присваиваем переменной класс карточки, по кнопке удаления которой кликнул пользователь;
-  const card = templateElement.content.cloneNode(true); // клонируем содержимое шаблона в проекте;
-  const imageCard = card.querySelector('.element__image'); // присваиваем переменной класс узла "Изображение карточки";
-  const removeButton = card.querySelector('.element__remove-button'); // присваиваем переменной класс узла "Кнопка удаления карточки";
-  const likeButton = card.querySelector('.element__button'); // присваиваем переменной класс узла "Кнопка Лайк";
+  const imageCard = targetElement.querySelector('.element__image'); // присваиваем переменной класс узла "Изображение карточки";
+  const removeButton = targetElement.querySelector('.element__remove-button'); // присваиваем переменной класс узла "Кнопка удаления карточки";
+  const likeButton = targetElement.querySelector('.element__button'); // присваиваем переменной класс узла "Кнопка Лайк";
   imageCard.removeEventListener('click', openImagePopup); // снимаем "слушатель", вызывающий функцию "openImagePopup" при нажатии на изображение карточки;
   removeButton.removeEventListener('click', removeCard); // снимаем "слушатель", вызывающий функцию "removeCard" при нажатии на кнопку "Удалить карточку";
   likeButton.removeEventListener('click', changeLikeButtonColor); // снимаем "слушатель", вызывающий функцию "changeLikeButtonColor" при нажатии на кнопку "Лайк";
