@@ -18,13 +18,37 @@ const imagePopup = document.querySelector('.popup_place_image-popup'); // выб
 const photoImagePopup = document.querySelector('.popup__image'); // выбираем в проекте класс изображения "Попап-окна";
 const captionImagePopup = document.querySelector('.popup__caption'); // выбираем в проекте класс подписи к изображению "Попап-окна";
 const closeButtonImagePopup = document.querySelector('.popup__button-close_place_image-popup'); // выбираем в проекте класс кнопки "Закрыть";
-
-function openPopup(item) { // объявляем функцию с аргументом, реализующую открытие любого "Попап-окна";
-  item.classList.add('popup_active'); // добавляем классу "Попап-окна" модификатор, реализующий видимость блока;
-}
+const overlay = document.querySelector('.project-area'); // выбираем в проекте класс тега <body>;
+const popups = document.querySelectorAll('.popup'); // выбираем в проекте класс всех попап-окон;
 
 function сlosePopup(item) { // объявляем функцию с аргументами, реализующую закрытие любого "Попап-окна";
   item.classList.remove('popup_active'); // удаляем у класса "Попап-окна" модификатор, реализующий видимость блока;
+  overlay.removeEventListener('keydown', handleKeydown); // подключаем "слушатель", вызывающий функцию handleKeydown при нажатии на клавишу;
+}
+
+function handleKeydown(evt) { // объявляем функцию, реализующую закрытие любого "Попап-окна" при нажатии клавиши "Esc";
+  if (evt.key === 'Escape') { // если нажата клавиша Esc -
+    popups.forEach(item => { // для каждого попап-окна
+      сlosePopup(item); // вызываем функцию сlosePopup;
+    });
+  }
+}
+
+function composeEventListener() { // объявляем функцию, реализующую добавление "слушателя", вызывающего функцию сlosePopup при клике по оверлею, всем "Попап-окнам";
+popups.forEach(item => { // каждому попап-окну
+  item.addEventListener('click', evt => { // добавляем слушатель, который при клике,
+    if (evt.target.classList.contains('popup__container') || // если класс элемента, по которому кликнули, "popup__container"
+      evt.target.classList.contains('popup')) { // или "popup"
+        сlosePopup(item); // вызывает функцию сlosePopup;
+      }
+  }); 
+});
+}
+
+function openPopup(item) { // объявляем функцию с аргументом, реализующую открытие любого "Попап-окна";
+  item.classList.add('popup_active'); // добавляем классу "Попап-окна" модификатор, реализующий видимость блока;
+  overlay.addEventListener('keydown', handleKeydown); // подключаем "слушатель", вызывающий функцию handleKeydown при нажатии на клавишу;
+  composeEventListener(); // вызываем функцию, реализующую закрытие попап-окон при клике;
 }
 
 function openEditPopup() { // объявляем функцию, реализующую открытие "Попап-окна";
