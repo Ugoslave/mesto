@@ -50,14 +50,15 @@ function setEventListener(form, config) { // реализуем функцию, 
 
 function enableValidation(config) { // реализуем функцию, осуществляющую проверку всех форм проекта;
   const forms = document.querySelectorAll(config.formSelector); // формируем из форм проекта Node List;
-  const submitButton = form.querySelector(config.submitButtonSelector); // присваиваем переменной класс кнопки отправки формы;
+  
   
   forms.forEach(form => { // перебираем формы,
     setEventListener(form, config); // вызываем функцию setEventListener,
     form.addEventListener('submit', (evt) => { // каждой форме добавляем "слушатель" события "submit",
       evt.preventDefault(); // отменяем стандартную отправку формы,
     });
-
+    
+    const submitButton = form.querySelector(config.submitButtonSelector); // присваиваем переменной класс кнопки отправки формы;
     setButtonState(submitButton, form.checkValidity(), config); // вызываем функцию setButtonState;
   });
 }
