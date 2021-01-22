@@ -1,3 +1,119 @@
+
+
+
+const addButton = document.querySelector('.profile__add-button'); // выбираем в проекте класс кнопки "Добавить";
+const closeButtonAddElementPopup = document.querySelector('.popup__button-close_place_add-element');
+const editButton = document.querySelector('.profile__edit-button'); // выбираем в проекте класс кнопки "Войти";
+const closeButton = document.querySelector('.popup__button-close'); // выбираем в проекте класс кнопки "Закрыть";
+const editPopup = document.querySelector('.popup'); // выбираем в проекте класс "Попап-окна";
+const form = document.querySelector('.popup__form'); // выбираем в проекте класс формы в "Попап-окне";
+const inputName = form.querySelector('.popup__input_data_name'); // выбираем в проекте класс первого поля ввода формы в "Попап-окне";
+const inputAbout = form.querySelector('.popup__input_data_about-yourself'); // выбираем в проекте класс второго поля ввода формы в "Попап-окне";
+const profileTitle = document.querySelector('.profile__title'); // выбираем в проекте класс заголовка секции "Профиль";
+const profileSubtitle = document.querySelector('.profile__subtitle'); // выбираем в проекте класс подзаголовка секции "Профиль";
+const inputErrors = document.querySelectorAll('.popup__input-error'); // выбираем в проекте все элементы ошибки поля ввода;
+const inputs = document.querySelectorAll('.popup__input'); // выбираем в проекте все поля ввода;
+const overlay = document.querySelector('.project-area'); // выбираем в проекте класс тега <body>;
+
+
+
+
+
+
+
+function setSubmitButton() { // реализуем функцию, переключающую состояние кнопки отправки формы;
+  const activePopup = document.querySelector('.popup_active'); // находим в проекте класс активного попап-окна;
+  const activeForm = activePopup.querySelector('.popup__form'); // выбираем в активном попап-окне форму;
+  const submitButton = activePopup.querySelector('.popup__button-save'); // выбираем в активном попап-окне кнопку отправки формы;
+
+  if (!activeForm.checkValidity()) {  // если форма не валидна - 
+  submitButton.classList.add('popup__button-save_state_invalid'); // добавляем кнопке соответствующий класс, используемый при ошибке,
+  submitButton.disabled = true; // изменяем у кнопки соответствующий атрибут (делаем неактивной);
+  } else { // если форма валидна -
+    submitButton.classList.remove('popup__button-save_state_invalid'); // удаляем у кнопки соответствующий класс, используемый при ошибке,
+    submitButton.disabled = false; // изменяем у кнопки соответствующий атрибут (делаем активной);
+  }
+}
+
+function resetInputErrors() { // объявляем функцию, сбрасывающего ошибки полей;
+  inputErrors.forEach(item => { // в каждом элементе ошибки поля ввода
+    item.textContent = ''; // заменяем текстовое содержимое на пустую строку;
+    });
+  }
+
+function resetInputValidState() { // объявляем функцию, сбрасывающую ошибочное состояние полей ввода;
+  inputs.forEach(item => { // у каждого поля ввода
+  item.classList.remove('popup__input_state_invalid'); // удаляем соответствующий класс ошибочного состояния;
+  });
+}
+
+function сlosePopup(item) { // объявляем функцию с аргументами, реализующую закрытие любого "Попап-окна";
+  item.classList.remove('popup_active'); // удаляем у класса "Попап-окна" модификатор, реализующий видимость блока;
+  overlay.removeEventListener('keydown', handleKeydown); // удаляем "слушатель", вызывающий функцию handleKeydown при нажатии на клавишу;
+  item.removeEventListener('click', closePopupByOverlayClick); // удаляем "слушатель", вызывающий функцию closePopupByOverlayClick при клике по оверлею;
+}
+
+function handleKeydown(evt) { // объявляем функцию, реализующую закрытие любого "Попап-окна" при нажатии клавиши "Esc";
+  const activePopup = document.querySelector('.popup_active'); // находим в проекте класс активного попап-окна;
+  if (evt.key === 'Escape') { // если нажата клавиша Esc -
+      сlosePopup(activePopup); // вызываем функцию сlosePopup;
+  }
+}
+
+function closePopupByOverlayClick(evt) {
+  const activePopup = document.querySelector('.popup_active'); // находим в проекте класс активного попап-окна;
+  if (evt.target.classList.contains('popup__container') || // если класс элемента, по которому кликнули, "popup__container"
+      evt.target.classList.contains('popup')) { // или "popup" -
+        сlosePopup(activePopup); // вызывает функцию сlosePopup;
+  }
+}
+
+function openEditPopup() { // объявляем функцию с аргументом, реализующую открытие любого "Попап-окна";
+  editPopup.classList.add('popup_active'); // добавляем классу "Попап-окна" модификатор, реализующий видимость блока;
+  inputName.value = profileTitle.textContent; // присваиваем полю ввода "Имя" формы "Попап-окна" текстовое содержимое заголовка секции "Профиль";
+  inputAbout.value = profileSubtitle.textContent; // присваиваем полю ввода "О себе" формы "Попап-окна" текстовое содержимое подзаголовка секции "Профиль";
+  editPopup.addEventListener('click', closePopupByOverlayClick); // подключаем слушатель, реализующий закрытие попап-окон при клике по оверлею;
+  overlay.addEventListener('keydown', handleKeydown); // подключаем "слушатель", вызывающий функцию handleKeydown при нажатии на клавишу;
+  resetInputValidState(); // вызываем функцию, сбрасывающую ошибочное состояние полей ввода;
+  resetInputErrors(); // объявляем функцию, сбрасывающего ошибки полей;
+  setSubmitButton(); // вызываем функцию setSubmitButton для валидации полей при открытии попапа;
+  
+}
+
+function handleFormSubmit(evt) { // объявляем функцию, реализующую сохранение значений полей ввода данных и отправку формы;
+  evt.preventDefault(); // отменяем стандартную отправку формы;
+  profileTitle.textContent = inputName.value; // заменяем текстовое содержимое заголовка секции "Профиль" значением поля ввода "Имя" формы "Попап-окна";
+  profileSubtitle.textContent = inputAbout.value; // заменяем текстовое содержимое подзаголовка секции "Профиль" значением поля ввода "О себе" формы "Попап-окна";
+  сlosePopup(editPopup); // реализуем автоматическое закрытие "Попап-окна";
+}
+
+
+import {initialCards} from './initial-cards.js';
+
+import {Card} from './card.js';
+
+import {validationConfig} from './validationConfig.js';
+
+import {FormValidator} from './FormValidator.js';
+
+
+const card = new Card(initialCards, '.card');
+card.render(document.querySelector('.cards-container'));
+
+const editformValidation = new FormValidator(validationConfig, '.popup__form').enableValidation();
+const addFormValidation = new FormValidator(validationConfig, '.popup__form_place_add-element').enableValidation();
+
+
+addButton.addEventListener('click', card.openAddCardPopup); // подключаем "слушатель", вызывающий функцию "openAddElementPopup" при нажатии на кнопку "Добавить элемент";
+closeButtonAddElementPopup.addEventListener('click', card.closeAddCardPopup);
+
+editButton.addEventListener('click', openEditPopup); // подключаем "слушатель", вызывающий функцию openClosePopup при нажатии на кнопку "Войти";
+closeButton.addEventListener('click', () => сlosePopup(editPopup)); // подключаем "слушатель", вызывающий функцию "сlosePopup" при нажатии на кнопку "Закрыть";
+form.addEventListener('submit', handleFormSubmit); // подключаем "слушатель", вызывающий функцию handleFormSubmit при нажатии на кнопку "Сохранить";
+
+
+
+/*
 const editButton = document.querySelector('.profile__edit-button'); // выбираем в проекте класс кнопки "Войти";
 const closeButton = document.querySelector('.popup__button-close'); // выбираем в проекте класс кнопки "Закрыть";
 const popup = document.querySelector('.popup'); // выбираем в проекте класс "Попап-окна";
@@ -158,3 +274,4 @@ closeButtonImagePopup.addEventListener('click', () => сlosePopup(imagePopup)); 
 editButton.addEventListener('click', openEditPopup); // подключаем "слушатель", вызывающий функцию openClosePopup при нажатии на кнопку "Войти";
 closeButton.addEventListener('click', () => сlosePopup(popup)); // подключаем "слушатель", вызывающий функцию "сlosePopup" при нажатии на кнопку "Закрыть";
 form.addEventListener('submit', handleFormSubmit); // подключаем "слушатель", вызывающий функцию handleFormSubmit при нажатии на кнопку "Сохранить";
+*/
