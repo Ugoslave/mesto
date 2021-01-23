@@ -7,8 +7,8 @@ export class FormValidator {
     this._submitButtonSelector = config.submitButtonSelector;
     this._inactiveButtonClass = config.inactiveButtonClass;
     this._inputErrorClass = config.inputErrorClass;
+    this._submitButton = this._form.querySelector(this._submitButtonSelector);
   }
-  
   
   _showError() { // реализуем функцию, выводящую ошибку при невалидном поле ввода формы, с тремя параметрами: класс формы, класс поля ввода, объект настроек;
     const error = this._form.querySelector(`#${this._input.id}-error`); // присваиваем переменной идентификатор текстового контейнера соответсвующего поля ввода формы;
@@ -32,7 +32,6 @@ export class FormValidator {
   }
 
   _setButtonState(isActive) { // реализуем функцию, переключающую состояние кнопки отправки формы, с тремя параметрами: класс кнопки, состояние кнопки, объект настроек;
-    this._submitButton = this._form.querySelector(this._submitButtonSelector);
     
     if (isActive) { // если кнопка активна - 
       this._submitButton.classList.remove(this._inactiveButtonClass); // удаляем у кнопки соответствующий класс, используемый при ошибке,
@@ -45,7 +44,6 @@ export class FormValidator {
   
   _setEventListener() { // реализуем функцию, добавляющую "слушатель" события "input" всем полям ввода формы, с двумя параметрами: класс формы, объект настроек;
     this._inputList = this._form.querySelectorAll(this._inputSelector); // формируем из полей вода Node List;
-    this._submitButton = this._form.querySelector(this._submitButtonSelector); // присваиваем переменной класс кнопки отправки формы;
 
     this._inputList.forEach(input => { // перебираем поля ввода формы,
       input.addEventListener('input', () => { // каждому полю ввода добавляем "слушатель" события "input",
@@ -58,15 +56,13 @@ export class FormValidator {
   enableValidation() { // реализуем функцию, осуществляющую проверку всех форм проекта;
     this._forms = document.querySelectorAll(this._formSelector); // формируем из форм проекта Node List;
   
-    this._forms.forEach(form => { // перебираем формы,
+    this._forms.forEach(() => { // перебираем формы,
       this._setEventListener(); // вызываем функцию setEventListener,
       this._form.addEventListener('submit', (evt) => { // каждой форме добавляем "слушатель" события "submit",
         evt.preventDefault(); // отменяем стандартную отправку формы,
       });
     
-      this._submitButton = this._form.querySelector(this._submitButtonSelector); // присваиваем переменной класс кнопки отправки формы;
       this._setButtonState(this._form.checkValidity()); // вызываем функцию setButtonState;
     });
   }
-
 }
