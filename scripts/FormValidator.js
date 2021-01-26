@@ -10,28 +10,28 @@ export class FormValidator {
     this._submitButton = this._form.querySelector(this._submitButtonSelector);
   }
   
-  _showError() { // реализуем функцию, выводящую ошибку при невалидном поле ввода формы, с тремя параметрами: класс формы, класс поля ввода, объект настроек;
+  _showError() { // реализуем метод класса, выводящий ошибку при невалидном поле ввода формы;
     const error = this._form.querySelector(`#${this._input.id}-error`); // присваиваем переменной идентификатор текстового контейнера соответсвующего поля ввода формы;
     error.textContent = this._input.validationMessage; // присваиваем текстовому содержимому  найденного контейнера текст стандартной ошибки поля ввода;
     this._input.classList.add(this._inputErrorClass); // добавляем полю ввода соответствующий класс, используемый при ошибке;
   }
   
-  _hideError() { // реализуем функцию, скрывающую ошибку при валидном поле ввода формы, с тремя параметрами: класс формы, класс поля ввода, объект настроек;
+  _hideError() { // реализуем метод класаа, скрывающий ошибку при валидном поле ввода формы;
     const error = this._form.querySelector(`#${this._input.id}-error`); // присваиваем переменной идентификатор текстового контейнера соответсвующего поля ввода формы;
     error.textContent = ''; // присваиваем текстовому содержимому  найденного контейнера пустую строку;
     this._input.classList.remove(this._inputErrorClass); // удаляем у поля ввода соответствующий класс, используемый при ошибке;
   }
 
-  _checkInputValidity(input) { // реализуем функцию, проверяющую валидность поля ввода формы, с тремя параметрами: класс формы, класс поля ввода, объект настроек;
+  _checkInputValidity(input) { // реализуем метод класса, проверяющий валидность поля ввода формы;
     this._input = input;
     if(this._input.validity.valid) { // если поле ввода валидно - 
-      this._hideError(); // вызываем функцию hideError, 
+      this._hideError(); // вызываем метод hideError, 
     } else { // если нет -
-      this._showError(); // вызываем функцию showError;
+      this._showError(); // вызываем метод showError;
     }
   }
 
-  _setButtonState(isActive) { // реализуем функцию, переключающую состояние кнопки отправки формы, с тремя параметрами: класс кнопки, состояние кнопки, объект настроек;
+  _setButtonState(isActive) { // реализуем метод класса, переключающий состояние кнопки отправки формы;
     
     if (isActive) { // если кнопка активна - 
       this._submitButton.classList.remove(this._inactiveButtonClass); // удаляем у кнопки соответствующий класс, используемый при ошибке,
@@ -42,7 +42,7 @@ export class FormValidator {
     }
   }
   
-  _setEventListener() { // реализуем функцию, добавляющую "слушатель" события "input" всем полям ввода формы, с двумя параметрами: класс формы, объект настроек;
+  _setEventListener() { // реализуем метод класса, добавляющий "слушатель" события "input" всем полям ввода формы;
     this._inputList = this._form.querySelectorAll(this._inputSelector); // формируем из полей вода Node List;
 
     this._inputList.forEach(input => { // перебираем поля ввода формы,
@@ -53,16 +53,26 @@ export class FormValidator {
     });
   }
 
-  enableValidation() { // реализуем функцию, осуществляющую проверку всех форм проекта;
-    this._forms = document.querySelectorAll(this._formSelector); // формируем из форм проекта Node List;
-  
-    this._forms.forEach(() => { // перебираем формы,
-      this._setEventListener(); // вызываем функцию setEventListener,
-      this._form.addEventListener('submit', (evt) => { // каждой форме добавляем "слушатель" события "submit",
+  enableValidation() { // реализуем метод класса, осуществляющий проверку переданной в конструктор формы проекта;
+    this._setEventListener(); // вызываем метод setEventListener,
+    
+    this._form.addEventListener('submit', (evt) => { // форме добавляем "слушатель" события "submit",
         evt.preventDefault(); // отменяем стандартную отправку формы,
       });
     
-      this._setButtonState(this._form.checkValidity()); // вызываем функцию setButtonState;
-    });
+    this._setButtonState(this._form.checkValidity()); // вызываем метод _setButtonState;
   }
+  
+  resetInputErrors() { // объявляем функцию, сбрасывающую ошибки полей ввода;
+    this._inputErrors = this._form.querySelectorAll('.popup__input-error'); // формируем из полей вода Node List;
+    this._inputList = this._form.querySelectorAll(this._inputSelector); // формируем из полей вода Node List;
+
+    this._inputErrors.forEach(item => { // в каждом элементе ошибки поля ввода
+      item.textContent = ''; // заменяем текстовое содержимое на пустую строку;
+      });
+    
+    this._inputList.forEach(item => { // у каждого поля ввода
+      item.classList.remove(this._inputErrorClass); // удаляем соответствующий класс ошибочного состояния;
+      });
+    }
 }
