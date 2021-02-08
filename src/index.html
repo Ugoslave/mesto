@@ -5,18 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Путешествия по всему миру">
   <meta name="author" content="Алексей Пересыпкин">
-  <link rel="stylesheet" href="./pages/index.css">
   <title>Место</title>
 </head>
 <body class="project-area">
   <div class="page">
     <header class="header">
-      <img src="./images/header-logo.svg" alt="Место" class="logo">
+      <img src="<%=require('./images/header-logo.svg')%>" alt="Место" class="logo">
     </header>
     <main>
       <section class="profile">
         <div class="profile__info">
-          <img src="./images/profile-avatar.jpg" alt="Аватар" class="profile__avatar">
+          <img src="<%=require('./images/profile-avatar.jpg')%>" alt="Аватар" class="profile__avatar">
           <div class="profile__info-container">
             <div class="profile__title-box">
               <h1 class="profile__title">Жак-Ив Кусто</h1>
@@ -34,12 +33,12 @@
               <div class="element__image-box">
                 <img src="#" alt="Фото красивого места" class="element__image">
                 <button type="button" class="element__remove-button">
-                  <img src="./images/element-removeButton.svg" alt="Удалить">
+                  <img src="<%=require('./images/element-removeButton.svg')%>" alt="Удалить">
                 </button>
               </div>
               <div class="element__text-box">
                 <h2 class="element__title"></h2>
-                <button type="button" class="element__button"><img src="./images/element-like.svg" alt="Нравится"></button>
+                <button type="button" class="element__button"><img src="<%=require('./images/element-like.svg')%>" alt="Нравится"></button>
               </div>
             </li>
           </template>  
@@ -53,7 +52,7 @@
   <div class="popup">
     <div class="popup__container">
       <button type="button" class="popup__button-close">
-        <img src="./images/popup-closeButton.svg" alt="Закрыть" class="popup__button-image">
+        <img src="<%=require('./images/popup-closeButton.svg')%>" alt="Закрыть" class="popup__button-image">
       </button>
       <div class="popup__form-box">
         <h2 class="popup__title">Редактировать профиль</h2>
@@ -86,7 +85,7 @@
   <div class="popup popup_content_add-element">
     <div class="popup__container popup__container_place_add-element">
       <button type="button" class="popup__button-close popup__button-close_place_add-element">
-        <img src="./images/popup-closeButton.svg" alt="Закрыть" class="popup__button-image">
+        <img src="<%=require('./images/popup-closeButton.svg')%>" alt="Закрыть" class="popup__button-image">
       </button>
       <div class="popup__form-box popup__form-box_place_add-element">
         <h2 class="popup__title popup__title_place_add-element">Новое место</h2>
@@ -117,7 +116,7 @@
   <div class="popup popup_place_image-popup">
     <div class="popup__container popup__container_place_image-popup">
       <button type="button" class="popup__button-close popup__button-close_place_image-popup">
-        <img src="./images/popup-closeButton.svg" alt="Закрыть" class="popup__button-image">
+        <img src="<%=require('./images/popup-closeButton.svg')%>" alt="Закрыть" class="popup__button-image">
       </button>
       <figure class="popup__content-box">
         <img src="#" alt="Фото красивого места" class="popup__image">
@@ -125,6 +124,5 @@
       </figure>
     </div>
   </div>
-  <script type="module" src="./scripts/index.js"></script>
 </body>
 </html>

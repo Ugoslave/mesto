@@ -1,12 +1,10 @@
-import {openImagePopup} from './index.js';
-
 export class Card { // создаем и экспортируем класс карточки
   
-  constructor(data, cardTemplate, handleKeydown) {
+  constructor(data, cardTemplate, handleCardClick) {
     this._cardTemplate = document.querySelector(cardTemplate).content;
     this._name = data.name;
     this._link = data.link;
-    this._handleKeydown = handleKeydown;
+    this._handleCardClick = handleCardClick.open;
   }
 
   _getCardTemplate() { // реализуем метод класса, возвращающий шаблон разметки карточки;
@@ -23,15 +21,13 @@ export class Card { // создаем и экспортируем класс к�
 
   _setEventListeners() { // реализуем метод класса, подключающий карточке все слушатели и возвращающий её;
     this._cardElement = this._getCardTemplate();
-    this._projectPage = document.querySelector('.project-area');
     this._cardImage = this._cardElement.querySelector('.element__image');
     this._removeCardButton = this._cardElement.querySelector('.element__remove-button');
     this._likeButton = this._cardElement.querySelector('.element__button');
 
     this._removeCardButton.addEventListener('click', this._removeCard); // подключаем кнопке "Удалить" слушатель для удаления карточки;
     this._likeButton.addEventListener('click', this._changeLikeButtonColor); // подключаем кнопке "Лайк" слушатель для реализации отметки понравившейся карточки;
-    this._cardImage.addEventListener('click', openImagePopup); // подключаем изображению карточке слушатель для открытия попапа с увеличенным изображением;
-    this._projectPage.addEventListener('keydown', this._handleKeydown);
+    this._cardImage.addEventListener('click', this._handleCardClick); // подключаем изображению карточке слушатель для открытия попапа с увеличенным изображением;
 
     return this._cardElement;
   }

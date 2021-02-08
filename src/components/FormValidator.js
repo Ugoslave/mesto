@@ -63,7 +63,7 @@ export class FormValidator {
     this._setButtonState(this._form.checkValidity()); // вызываем метод _setButtonState;
   }
   
-  resetInputErrors() { // объявляем функцию, сбрасывающую ошибки полей ввода;
+  resetInputErrors = () => { // объявляем функцию, сбрасывающую ошибки полей ввода;
     this._inputErrors = this._form.querySelectorAll('.popup__input-error'); // формируем из полей вода Node List;
     this._inputList = this._form.querySelectorAll(this._inputSelector); // формируем из полей вода Node List;
 
