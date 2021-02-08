@@ -2,45 +2,35 @@ import {Popup} from './Popup.js';
 
 export class PopupWithForm extends Popup {
 
-  constructor(popupSelector, handleFormSubmit, userInfo, setSubmitButton, formValidation) {
-    super(popupSelector, handleFormSubmit, userInfo, setSubmitButton, formValidation);
+  constructor(popupSelector, handleFormSubmit, handleOpenPopup) {
+    super(popupSelector, handleFormSubmit, handleOpenPopup);
     this._handleFormSubmit = handleFormSubmit;
-    this._popupForm = popupSelector.querySelector('.popup__form');
-    this._userInfo = userInfo.getUserInfo();
-    this._setSubmitButton = setSubmitButton;
-    this._formValidation = formValidation.resetInputErrors;
+    this._popupForm = document.querySelector(popupSelector).querySelector('.popup__form');
+    this._inputs = this._popupElement.querySelectorAll('.popup__input');
+    this._handleOpenPopup = handleOpenPopup;
   }
 
   _getInputValues() {
-    const inputs = this._popupSelector.querySelectorAll('.popup__input');
-    const inputsArray = Array.from(inputs);
+    const inputsArray = Array.from(this._inputs);
     
-    const InputValues = {name: inputsArray[0].value, about: inputsArray[1].value};
+    const inputValues = {};
+    inputsArray.forEach(item => inputValues[item.name] = item.value);
 
-    return InputValues;
+    return inputValues;
   }
 
   setEventListeners() {
     super.setEventListeners();
-    this._popupForm.addEventListener('submit', this._handleFormSubmit); // подключаем "слушатель", вызывающий функцию handleFormSubmit при нажатии на кнопку "Сохранить";
-  }
-
-  close = () => {
-    this._popupSelector.classList.remove('popup_active');
-    this.removeEventListeners();
+    this._popupForm.addEventListener('submit', () => this._handleFormSubmit(this._getInputValues())); // подключаем "слушатель", вызывающий функцию handleFormSubmit при нажатии на кнопку "Сохранить";
   }
 
   open = () => {
-    this._inputName = document.querySelector('.popup__input_data_name'); // выбираем в проекте класс первого поля ввода формы в "Попап-окне";
-    this._inputAbout = document.querySelector('.popup__input_data_about-yourself'); // выбираем в проекте класс второго поля ввода формы в "Попап-окне";
+    super.open()
+    this._handleOpenPopup();
+  }
 
-    this._popupSelector.classList.add('popup_active');
-    this.setEventListeners();
+  close = () => {
+    super.close();
     this._popupForm.reset();
-    this._setSubmitButton();
-    this._formValidation();
-    
-    this._inputName.value = this._userInfo.name;
-    this._inputAbout.value = this._userInfo.about;
   }
 }

@@ -1,21 +1,16 @@
 import './index.css';
 
-import {initialCards} from '../utils/initial-cards.js';
-
 import {addButton, 
-  editButton, 
-  editPopup, 
-  addCardPopup, 
-  imagePopup, 
-  inputTitle, 
-  inputLink, 
-  userDataSelector, 
-  cardsContainer} from '../utils/constants.js'
+        editButton,
+        userDataSelector, 
+        inputName, 
+        inputAbout, 
+        validationConfig, 
+        initialCards, 
+        cardsContainer} from '../utils/constants.js'
 
 import {Card} from '../components/card.js';
-import {validationConfig} from '../utils/validationConfig.js';
 import {FormValidator} from '../components/FormValidator.js';
-import {setSubmitButton} from '../utils/utils.js';
 import {Section} from '../components/Section.js';
 import {PopupWithImage} from '../components/PopupWithImage.js';
 import {PopupWithForm} from '../components/PopupWithForm.js';
@@ -28,9 +23,12 @@ addFormValidation.enableValidation(); // запускаем валидацию �
  
 const userInfo = new UserInfo(userDataSelector);
 
-const popupWithImage = new PopupWithImage(imagePopup);
-const popupWithAddForm = new PopupWithForm(addCardPopup, handleFormSubmit, userInfo, setSubmitButton, addFormValidation);
-const popupWithEditForm = new PopupWithForm(editPopup, handleEditFormSubmit, userInfo, setSubmitButton, editformValidation);
+const popupWithImage = new PopupWithImage('.popup_place_image-popup');
+popupWithImage.setEventListeners();
+const popupWithAddForm = new PopupWithForm('.popup_content_add-element', handleFormSubmit, handleAddCardForm);
+popupWithAddForm.setEventListeners();
+const popupWithEditForm = new PopupWithForm('.popup', handleEditFormSubmit, handleOpenProfileForm);
+popupWithEditForm.setEventListeners();
 
 const cardList = new Section({items: initialCards, renderer: (item) => {
   const card = new Card(item, '.card', popupWithImage); // записываем в переменную экземпляр класса Card (новых карточек);
@@ -41,22 +39,30 @@ const cardList = new Section({items: initialCards, renderer: (item) => {
 
 cardList.renderItems();
 
-function handleEditFormSubmit(evt) { // объявляем функцию, реализующую сохранение значений полей ввода данных и отправку формы;
-  evt.preventDefault(); // отменяем стандартную отправку формы;
-  userInfo.setUserInfo();
+function handleEditFormSubmit() { // объявляем функцию, реализующую сохранение значений полей ввода данных и отправку формы;
+  userInfo.setUserInfo(inputName.value, inputAbout.value);
   popupWithEditForm.close(); // реализуем автоматическое закрытие "Попап-окна";
 }
 
-function handleFormSubmit(evt) { // объявляем функцию, реализующую сохранение значений полей ввода данных и создание новой карточки;
-  evt.preventDefault(); // отменяем стандартную отправку формы;
-  const newCardTitle = inputTitle.value; // присваиваем переменной значение, введенноё пользователем в поле "Название";
-  const newCardLink = inputLink.value; // присваиваем переменной значение, введенноё пользователем в поле "Ссылка";
-  
-  const card = new Card({ name: newCardTitle, link: newCardLink }, '.card', popupWithImage); // записываем в переменную экземпляр класса Card (новых карточек);
+function handleFormSubmit(data) { // объявляем функцию, реализующую сохранение значений полей ввода данных и создание новой карточки;
+  const card = new Card({ name: data.title, link: data.link }, '.card', popupWithImage); // записываем в переменную экземпляр класса Card (новых карточек);
   const element = card.renderCard();
   cardsContainer.prepend(element); // с помощью метода класса отрисовываем карточки в указанном блоке;
 
   popupWithAddForm.close(); // закрываем попап-окно;
+}
+
+function handleOpenProfileForm() {
+  const userData = userInfo.getUserInfo();
+  inputName.value = userData.name;
+  inputAbout.value = userData.about;
+  editformValidation.resetInputErrors();
+  editformValidation.setButtonState(false);
+}
+
+function handleAddCardForm() {
+  addFormValidation.resetInputErrors();
+  addFormValidation.setButtonState(false);
 }
 
 addButton.addEventListener('click', popupWithAddForm.open); // подключаем "слушатель", вызывающий функцию "openAddElementPopup" при нажатии на кнопку "Добавить элемент";

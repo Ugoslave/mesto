@@ -1,21 +1,20 @@
 export class Popup {
 
   constructor(popupSelector) {
-    this._popupSelector = popupSelector;
+    this._popupElement = document.querySelector(popupSelector);
   }
 
-  open = () => {
-    this._popupSelector.classList.add('popup_active');
-    this.setEventListeners();
+  open() {
+    this._popupElement.classList.add('popup_active');
+    document.querySelector('.project-area').addEventListener('keydown', this._handleEscClose);
   }
 
-  close = () => {
-    this._popupSelector.classList.remove('popup_active');
-    this.removeEventListeners();
+  close() {
+    this._popupElement.classList.remove('popup_active');
+    document.querySelector('.project-area').removeEventListener('keydown', this._handleEscClose);
   }
 
   _handleEscClose = (evt) => {
-    this._activePopup = document.querySelector('.popup_active'); // находим в проекте класс активного попап-окна;
     
     if (evt.key === 'Escape') { // если нажата клавиша Esc -
       this.close(); // вызываем функцию сlosePopup;
@@ -23,7 +22,7 @@ export class Popup {
   }
 
   _closePopupByOverlayClick = (evt) => {
-    const activePopup = document.querySelector('.popup_active'); // находим в проекте класс активного попап-окна;
+
     if (evt.target.classList.contains('popup__container') || // если класс элемента, по которому кликнули, "popup__container"
         evt.target.classList.contains('popup')) { // или "popup" -
         this.close(); // вызывает функцию сlosePopup; 
@@ -31,18 +30,12 @@ export class Popup {
   }
 
   setEventListeners() {
-    this._closeButton = document.querySelector('.popup_active').querySelector('.popup__button-close'); // выбираем в проекте класс кнопки "Закрыть";
+    this._closeButton = this._popupElement.querySelector('.popup__button-close'); // выбираем в проекте класс кнопки "Закрыть";
     this._projectPage = document.querySelector('.project-area');
     this._overlay = document.querySelector('.project-area'); // выбираем в проекте класс тега <body>;
 
-    this._closeButton.addEventListener('click', this.close);
+    this._closeButton.addEventListener('click', () => this.close());
     this._projectPage.addEventListener('keydown', this._handleEscClose);
     this._overlay.addEventListener('click', this._closePopupByOverlayClick);
-  }
-
-  removeEventListeners() {
-    this._closeButton.removeEventListener('click', this.close);
-    this._projectPage.removeEventListener('keydown', this._handleEscClose);
-    this._overlay.removeEventListener('click', this._closePopupByOverlayClick);
   }
 }
