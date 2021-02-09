@@ -6,12 +6,12 @@ export class Popup {
 
   open() {
     this._popupElement.classList.add('popup_active');
-    document.querySelector('.project-area').addEventListener('keydown', this._handleEscClose);
+    document.addEventListener('keydown', this._handleEscClose);
   }
 
   close() {
     this._popupElement.classList.remove('popup_active');
-    document.querySelector('.project-area').removeEventListener('keydown', this._handleEscClose);
+    document.removeEventListener('keydown', this._handleEscClose);
   }
 
   _handleEscClose = (evt) => {
@@ -31,11 +31,9 @@ export class Popup {
 
   setEventListeners() {
     this._closeButton = this._popupElement.querySelector('.popup__button-close'); // выбираем в проекте класс кнопки "Закрыть";
-    this._projectPage = document.querySelector('.project-area');
     this._overlay = document.querySelector('.project-area'); // выбираем в проекте класс тега <body>;
 
     this._closeButton.addEventListener('click', () => this.close());
-    this._projectPage.addEventListener('keydown', this._handleEscClose);
     this._overlay.addEventListener('click', this._closePopupByOverlayClick);
   }
 }

@@ -65,14 +65,7 @@ export class FormValidator {
   }
   
   resetInputErrors = () => { // объявляем функцию, сбрасывающую ошибки полей ввода;
-    this._inputErrors = this._form.querySelectorAll('.popup__input-error'); // формируем из полей вода Node List;
-
-    this._inputErrors.forEach(item => { // в каждом элементе ошибки поля ввода
-      item.textContent = ''; // заменяем текстовое содержимое на пустую строку;
-      });
-    
     this._inputList.forEach(input => { // у каждого поля ввода
-      this._input = input;
       this._hideError(input); // удаляем соответствующий класс ошибочного состояния;
       });
     }
