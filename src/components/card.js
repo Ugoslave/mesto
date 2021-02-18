@@ -17,12 +17,13 @@ export class Card { // создаем и экспортируем класс к�
   }
 
   _removeCard = (evt) => {// реализуем метод класса для удаления карточки;
+    evt.preventDefault();
     this._api.removeElement(this._id) 
              .then(() => {
-               evt.target.closest('.element').remove();
+               document.querySelector('.element').remove();
                this._popupWithConfirmation.close();
              }) 
-             .catch(err => console.log(err))
+             .catch(err => console.log(err));
   }
 
   _setLikeButton = (evt) => {// реализуем метод класса для отметки понравившейся карточки;
