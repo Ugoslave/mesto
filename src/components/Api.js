@@ -1,4 +1,4 @@
-export class Api { // создаем и экспортируем класс карточки
+export class Api { // создаем и экспортируем класс работы с API
   
   constructor(dataConfig) {
     this._url = dataConfig.url;
@@ -14,8 +14,8 @@ export class Api { // создаем и экспортируем класс ка
         return res.json();
         } else {
           return Promise.reject('Server is not found');
-        }
-      }) 
+      }
+    }) 
   }
 
   addCard(data) {
@@ -29,8 +29,8 @@ export class Api { // создаем и экспортируем класс ка
         return res.json();
         } else {
           return Promise.reject('Server is not found');
-        }
-      }) 
+      }
+    }) 
   }
 
   removeElement(id) {
@@ -43,8 +43,8 @@ export class Api { // создаем и экспортируем класс ка
         return res.json();
         } else {
           return Promise.reject('Server is not found');
-        }
-      }) 
+      }
+    }) 
   }
 
   getUserData() {
@@ -56,8 +56,8 @@ export class Api { // создаем и экспортируем класс ка
         return res.json();
         } else {
           return Promise.reject('Server is not found');
-        }
-      }) 
+      }
+    }) 
   }
 
   changeUserData(newData) {
@@ -71,8 +71,8 @@ export class Api { // создаем и экспортируем класс ка
         return res.json();
         } else {
           return Promise.reject('Server is not found');
-        }
-      }) 
+      }
+    }) 
   }
 
   changeAvatar(avatarLink) {
@@ -86,8 +86,8 @@ export class Api { // создаем и экспортируем класс ка
         return res.json();
         } else {
           return Promise.reject('Server is not found');
-        }
-      }) 
+      }
+    }) 
   }
 
   putLikeElement(id) {
@@ -100,8 +100,8 @@ export class Api { // создаем и экспортируем класс ка
         return res.json();
         } else {
           return Promise.reject('Server is not found');
-        }
-      }) 
+      }
+    }) 
   }
 
   deleteLikeElement(id) {
@@ -114,7 +114,7 @@ export class Api { // создаем и экспортируем класс ка
         return res.json();
         } else {
           return Promise.reject('Server is not found');
-        }
-      }) 
+      }
+    }) 
   }
 }

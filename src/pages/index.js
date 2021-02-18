@@ -66,13 +66,14 @@ api.getAllCards()
       }
     }, cardsContainer);
     
-
     cardList.renderItems();
   }) 
   .catch(err => console.log(err));
 
 
 function saveCardOnServer(data) {
+  showHandlingProcess(true, '.popup_content_add-element');
+  
   api.addCard(data) 
   .then(res => {
     const card = new Card(res, '.card', popupWithImage, api, popupWithConfirmation); // записываем в переменную экземпляр класса Card (новых карточек);
@@ -80,7 +81,8 @@ function saveCardOnServer(data) {
     cardsContainer.prepend(element); // с помощью метода класса отрисовываем карточки в указанном блоке; 
     popupWithAddForm.close();
   }) 
-  .catch(err => console.log(err));
+  .catch(err => console.log(err)) 
+  .finally(() => showHandlingProcess(false, '.popup_content_add-element', 'Создать'));
 }
 
 function handleOpenProfileForm() {
@@ -113,9 +115,11 @@ function handleRemoveItemForm(res) {
 
 
 function handleAvatarFormSubmit(avatarLink) {
+  showHandlingProcess(true, '.popup_content_avatar-update');
   api.changeAvatar(avatarLink) 
      .then(res => avatar.src = res.avatar) 
-     .catch(err => console.log(err));
+     .catch(err => console.log(err)) 
+     .finally(() => showHandlingProcess(false, '.popup_content_avatar-update', 'Сохранить'));
 
   popupWithAvatarForm.close();
 }
@@ -135,15 +139,28 @@ api.getUserData()
   .catch(err => console.log(err));
 
 
-  function handleEditFormSubmit(newData) { // объявляем функцию, реализующую сохранение значений полей ввода данных и отправку формы;
-    api.changeUserData(newData) 
+function handleEditFormSubmit(newData) { // объявляем функцию, реализующую сохранение значений полей ввода данных и отправку формы;
+  showHandlingProcess(true, '.popup');
+  
+  api.changeUserData(newData) 
        .then(res => {
         userInfo.setUserInfo(res.name, res.about)
         }) 
-       .catch(err => console.log(err));
+       .catch(err => console.log(err)) 
+       .finally(() => showHandlingProcess(false, '.popup', 'Сохранить'));
   
     popupWithEditForm.close(); // реализуем автоматическое закрытие "Попап-окна";
   }
+
+function showHandlingProcess(isLoading, popupSelector, text) {
+  const saveButton = document.querySelector(popupSelector).querySelector('.popup__button-save');
+
+  if (isLoading) {
+    saveButton.textContent = 'Сохранение...';
+  } else {
+    saveButton.textContent = text;
+  }
+}
 
 addButton.addEventListener('click', popupWithAddForm.open); // подключаем "слушатель", вызывающий функцию "openAddElementPopup" при нажатии на кнопку "Добавить элемент";
 editButton.addEventListener('click', popupWithEditForm.open); // подключаем "слушатель", вызывающий функцию openEditPopup при нажатии на кнопку "Войти";
