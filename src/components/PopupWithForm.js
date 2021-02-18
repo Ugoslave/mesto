@@ -25,7 +25,7 @@ export class PopupWithForm extends Popup {
   }
 
   open = () => {
-    super.open()
+    super.open();
     this._handleOpenPopup();
   }
 
