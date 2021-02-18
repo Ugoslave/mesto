@@ -2,9 +2,8 @@ import {Popup} from './Popup.js';
 
 export class PopupWithDeleteConfirmation extends Popup {
 
-  constructor(popupSelector, handleFormSubmit) {
-    super(popupSelector, handleFormSubmit);
-    this._handleFormSubmit = handleFormSubmit;
+  constructor(popupSelector) {
+    super(popupSelector);
     this._popupForm = document.querySelector(popupSelector).querySelector('.popup__form');
   }
   
@@ -12,8 +11,8 @@ export class PopupWithDeleteConfirmation extends Popup {
     super.open();
   }
 
-  setEventListeners() {
+  setEventListeners(callback) {
     super.setEventListeners();
-    this._popupForm.addEventListener('submit', this._handleFormSubmit); // подключаем "слушатель", вызывающий функцию handleFormSubmit при нажатии на кнопку "Сохранить";
+    this._popupForm.addEventListener('submit', callback); // подключаем "слушатель", вызывающий функцию handleFormSubmit при нажатии на кнопку "Сохранить";
   }
 }

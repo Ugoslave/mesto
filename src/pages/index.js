@@ -30,23 +30,18 @@ avatarFormValidation.enableValidation(); // запускаем валидаци�
  
 const userInfo = new UserInfo(userDataSelector);
 
+const popupWithImage = new PopupWithImage('.popup_place_image-popup');// записываем в переменную экземпляр класса Попапа
+popupWithImage.setEventListeners(); 
 
-
-
-
-const popupWithImage = new PopupWithImage('.popup_place_image-popup');
-popupWithImage.setEventListeners();
-
-const popupWithAddForm = new PopupWithForm('.popup_content_add-element', saveCardOnServer, handleAddCardForm);
+const popupWithAddForm = new PopupWithForm('.popup_content_add-element', saveCardOnServer, handleAddCardForm);// записываем в переменную экземпляр класса Попапа
 popupWithAddForm.setEventListeners();
 
-const popupWithEditForm = new PopupWithForm('.popup', handleEditFormSubmit, handleOpenProfileForm);
+const popupWithEditForm = new PopupWithForm('.popup', handleEditFormSubmit, handleOpenProfileForm);// записываем в переменную экземпляр класса Попапа
 popupWithEditForm.setEventListeners();
 
-const popupWithConfirmation = new PopupWithDeleteConfirmation('.popup_place_remove-confirmation', handleRemoveItemForm);
-popupWithConfirmation.setEventListeners();
+const popupWithConfirmation = new PopupWithDeleteConfirmation('.popup_place_remove-confirmation');// записываем в переменную экземпляр класса Попапа
 
-const popupWithAvatarForm = new PopupWithForm('.popup_content_avatar-update', handleAvatarFormSubmit, handleChangeAvatarForm);
+const popupWithAvatarForm = new PopupWithForm('.popup_content_avatar-update', handleAvatarFormSubmit, handleChangeAvatarForm); // записываем в переменную экземпляр класса Попапа
 popupWithAvatarForm.setEventListeners();
 
 const api = new Api({ // записываем в переменную экземпляр класса Api;
@@ -57,7 +52,7 @@ const api = new Api({ // записываем в переменную экзем
   }
 });
 
-api.getAllCards() 
+api.getAllCards() // вызываем метод класса API для загрузки карточек с сервера
   .then(res => {
     const cardList = new Section({items: res, renderer: (item) => {
       const card = new Card(item, '.card', popupWithImage, api, popupWithConfirmation); // записываем в переменную экземпляр класса Card (новых карточек);
@@ -71,10 +66,10 @@ api.getAllCards()
   .catch(err => console.log(err));
 
 
-function saveCardOnServer(data) {
+function saveCardOnServer(data) { //объявляем функцию для сохранения карточки на сервере
   showHandlingProcess(true, '.popup_content_add-element');
   
-  api.addCard(data) 
+  api.addCard(data) //вызываем метод класса API для добавления на сервер новой карточки
   .then(res => {
     const card = new Card(res, '.card', popupWithImage, api, popupWithConfirmation); // записываем в переменную экземпляр класса Card (новых карточек);
     const element = card.renderCard();
@@ -85,7 +80,7 @@ function saveCardOnServer(data) {
   .finally(() => showHandlingProcess(false, '.popup_content_add-element', 'Создать'));
 }
 
-function handleOpenProfileForm() {
+function handleOpenProfileForm() { // объявляем функцию для обработки формы при открытии попапа "Профиль"
   const userData = userInfo.getUserInfo();
   inputName.value = userData.name;
   inputAbout.value = userData.about;
@@ -93,30 +88,14 @@ function handleOpenProfileForm() {
   editformValidation.setButtonState(false);
 }
 
-function handleAddCardForm() {
+function handleAddCardForm() { // объявляем функцию для обработки формы при открытии попапа "Новая карточка"
   addFormValidation.resetInputErrors();
   addFormValidation.setButtonState(false);
 }
 
-
-
-
-function handleRemoveItemForm(res) {
-  debugger;
-  const card = new Card(res, '.card', popupWithImage, api, popupWithConfirmation);
-  card._removeCard();
-  popupWithConfirmation.close();
-}
-
-
-
-
-
-
-
-function handleAvatarFormSubmit(avatarLink) {
+function handleAvatarFormSubmit(avatarLink) { // объявляем функцию для изменения аватара пользователя
   showHandlingProcess(true, '.popup_content_avatar-update');
-  api.changeAvatar(avatarLink) 
+  api.changeAvatar(avatarLink) //вызываем метод класса API для добавления на сервер новой ссылки на аватар
      .then(res => avatar.src = res.avatar) 
      .catch(err => console.log(err)) 
      .finally(() => showHandlingProcess(false, '.popup_content_avatar-update', 'Сохранить'));
@@ -124,12 +103,12 @@ function handleAvatarFormSubmit(avatarLink) {
   popupWithAvatarForm.close();
 }
 
-function handleChangeAvatarForm() {
+function handleChangeAvatarForm() {// объявляем функцию для обработки формы при открытии попапа "Сменить аватар"
   avatarFormValidation.resetInputErrors();
   avatarFormValidation.setButtonState(false);
 }
 
-api.getUserData() 
+api.getUserData() //вызываем метод класса API для получения данных пользователя с сервера и добавления на страницу
   .then(res => {
     inputName.value = res.name;
     inputAbout.value = res.about;
@@ -142,7 +121,7 @@ api.getUserData()
 function handleEditFormSubmit(newData) { // объявляем функцию, реализующую сохранение значений полей ввода данных и отправку формы;
   showHandlingProcess(true, '.popup');
   
-  api.changeUserData(newData) 
+  api.changeUserData(newData) //вызываем метод класса API для сохранения новых данных пользователя на сервере
        .then(res => {
         userInfo.setUserInfo(res.name, res.about)
         }) 
@@ -152,7 +131,7 @@ function handleEditFormSubmit(newData) { // объявляем функцию, �
     popupWithEditForm.close(); // реализуем автоматическое закрытие "Попап-окна";
   }
 
-function showHandlingProcess(isLoading, popupSelector, text) {
+function showHandlingProcess(isLoading, popupSelector, text) { // объявляем функцию, реализующую демонстрацию состояния сохранения при отправке формы;
   const saveButton = document.querySelector(popupSelector).querySelector('.popup__button-save');
 
   if (isLoading) {

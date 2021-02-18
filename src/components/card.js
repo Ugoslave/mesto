@@ -9,7 +9,7 @@ export class Card { // создаем и экспортируем класс к�
     this._owner = data.owner;
     this._handleCardClick = handleCardClick.open;
     this._api = api;
-    this._popupWithConfirmation = popupWithConfirmation.open;
+    this._popupWithConfirmation = popupWithConfirmation;
   }
 
   _getCardTemplate() { // реализуем метод класса, возвращающий шаблон разметки карточки;
@@ -20,6 +20,7 @@ export class Card { // создаем и экспортируем класс к�
     this._api.removeElement(this._id) 
              .then(() => {
                evt.target.closest('.element').remove();
+               this._popupWithConfirmation.close();
              }) 
              .catch(err => console.log(err))
   }
@@ -52,7 +53,11 @@ export class Card { // создаем и экспортируем класс к�
     this._likeButton = this._cardElement.querySelector('.element__button');
     this._likesNumberBox = this._cardElement.querySelector('.element__likes-number');
 
-    this._removeCardButton.addEventListener('click', this._popupWithConfirmation); // подключаем кнопке "Удалить" слушатель для удаления карточки;
+    this._removeCardButton.addEventListener('click', () => {
+      this._popupWithConfirmation.open();
+      this._popupWithConfirmation.setEventListeners(this._removeCard); 
+    }); // подключаем кнопке "Удалить" слушатель для удаления карточки;
+
     this._likeButton.addEventListener('click', this._setLikeButton); // подключаем кнопке "Лайк" слушатель для реализации отметки понравившейся карточки;
     this._cardImage.addEventListener('click', () => this._handleCardClick(this._link, this._name)); // подключаем изображению карточке слушатель для открытия попапа с увеличенным изображением;
 
@@ -68,7 +73,7 @@ export class Card { // создаем и экспортируем класс к�
     if (this._owner._id !== '4debc027c95834910283f074') {
       this._removeCardButton.classList.add('element__remove-button_disactive');
     }
-    
+
     this._likesNumberBox.textContent = this._likes.length; // присваиваем текстовому узлу количества лайков значение длины массива "Лайки";
     this._cardTitle.textContent = this._name; // присваиваем текстовому узлу названия карточки значение ключа "Имя" из заданного массива
     this._cardImage.src = this._link;// присваиваем атрибуту изображения карточки значение ключа "Ссылка" из заданного массива

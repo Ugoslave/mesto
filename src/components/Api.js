@@ -5,7 +5,7 @@ export class Api { // создаем и экспортируем класс ра
     this._headers = dataConfig.headers;
   }
 
-  getAllCards() {
+  getAllCards() { // метод получения всех карточек с сервера
     return fetch(`${this._url}/cards`, {
       headers: this._headers
     }) 
@@ -18,7 +18,7 @@ export class Api { // создаем и экспортируем класс ра
     }) 
   }
 
-  addCard(data) {
+  addCard(data) { // метод сохранения новой карточки на сервере
     return fetch(`${this._url}/cards`, {
       method: "POST",
       headers: this._headers, 
@@ -33,7 +33,7 @@ export class Api { // создаем и экспортируем класс ра
     }) 
   }
 
-  removeElement(id) {
+  removeElement(id) { // метод удаления карточки с сервера
     return fetch(`${this._url}/cards/${id}`, {
       method: "DELETE",
       headers: this._headers
@@ -47,7 +47,7 @@ export class Api { // создаем и экспортируем класс ра
     }) 
   }
 
-  getUserData() {
+  getUserData() { // метод получения информации о пользователе с сервера
     return fetch(`${this._url}/users/me`, {
       headers: this._headers
     }) 
@@ -60,7 +60,7 @@ export class Api { // создаем и экспортируем класс ра
     }) 
   }
 
-  changeUserData(newData) {
+  changeUserData(newData) { // метод сохранения новых данных пользователя на сервере
     return fetch(`${this._url}/users/me`, {
       method: "PATCH",
       headers: this._headers, 
@@ -75,7 +75,7 @@ export class Api { // создаем и экспортируем класс ра
     }) 
   }
 
-  changeAvatar(avatarLink) {
+  changeAvatar(avatarLink) { // метод сохранения новой ссылки на аватар
     return fetch(`${this._url}/users/me/avatar`, {
       method: "PATCH",
       headers: this._headers, 
@@ -90,7 +90,7 @@ export class Api { // создаем и экспортируем класс ра
     }) 
   }
 
-  putLikeElement(id) {
+  putLikeElement(id) { // метод для добавления лайка 
     return fetch(`${this._url}/cards/likes/${id}`, {
       method: "PUT",
       headers: this._headers
@@ -104,7 +104,7 @@ export class Api { // создаем и экспортируем класс ра
     }) 
   }
 
-  deleteLikeElement(id) {
+  deleteLikeElement(id) { // метод для снятия лайка
     return fetch(`${this._url}/cards/likes/${id}`, {
       method: "DELETE",
       headers: this._headers
