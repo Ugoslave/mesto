@@ -18,9 +18,9 @@ export class Card { // создаем и экспортируем класс к�
 
   _removeCard = (evt) => {// реализуем метод класса для удаления карточки;
     evt.preventDefault();
-    this._api.removeElement(this._id) 
+    this._api.removeElement(this._id) // вызываем метод API для удаления карточки с сервера
              .then(() => {
-               document.querySelector('.element').remove();
+               document.querySelector('.element').remove(); // удаляем карточку из DOM
                this._popupWithConfirmation.close();
              }) 
              .catch(err => console.log(err));
@@ -28,20 +28,20 @@ export class Card { // создаем и экспортируем класс к�
 
   _setLikeButton = (evt) => {// реализуем метод класса для отметки понравившейся карточки;
     
-    if (evt.target.classList.contains('element__button_active')) {
-      this._api.putLikeElement(this._id) 
+    if (evt.target.classList.contains('element__button_active')) { // проверяем, поставлен лайк пользователем или нет
+      this._api.deleteLikeElement(this._id) // если поставлен - вызываем метод API, удаляющий лайк,
                .then((res) => { 
                  const likesNumber = res.likes;
-                 evt.target.classList.remove('element__button_active');
-                 this._likesNumberBox.textContent = likesNumber.length - 1;
+                 evt.target.classList.remove('element__button_active'); // удаляем активный класс у кнопки лайка,
+                 this._likesNumberBox.textContent = likesNumber.length; // меняем счетчик лайков
                }) 
                .catch(err => console.log(err));
     } else {
-        this._api.deleteLikeElement(this._id)
+        this._api.putLikeElement(this._id) // если лайк не поставлен - вызываем метод API для отправки лайка,
                  .then((res) => {
                     const likesNumber = res.likes;
-                    evt.target.classList.add('element__button_active');
-                    this._likesNumberBox.textContent = likesNumber.length + 1;
+                    evt.target.classList.add('element__button_active'); // добавляем активный класс у кнопки лайка,
+                    this._likesNumberBox.textContent = likesNumber.length; // меняем счетчик лайков
                  }) 
                  .catch(err => console.log(err));     
     }
@@ -71,8 +71,16 @@ export class Card { // создаем и экспортируем класс к�
     this._cardTitle = this._cardElement.querySelector('.element__title');
     this._cardImage = this._cardElement.querySelector('.element__image');
     
-    if (this._owner._id !== '4debc027c95834910283f074') {
-      this._removeCardButton.classList.add('element__remove-button_disactive');
+    if (this._owner._id !== '4debc027c95834910283f074') { // проверяем, создавал ли пользователь карточку
+      this._removeCardButton.classList.add('element__remove-button_disactive'); // если не создавал - убираем кнопку "Удалить"
+    }
+
+    this._check = this._likes.some(item => { // проверяем, поставлен ли пользователем лайк карточке
+      return item["_id"] === "4debc027c95834910283f074";
+    });
+
+    if (this._check === true) { // если поставлен - меняем цвет кнопки
+      this._likeButton.classList.add('element__button_active');
     }
 
     this._likesNumberBox.textContent = this._likes.length; // присваиваем текстовому узлу количества лайков значение длины массива "Лайки";
