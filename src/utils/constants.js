@@ -1,6 +1,5 @@
 const addButton = document.querySelector('.profile__add-button'); // выбираем в проекте класс кнопки "Добавить";
 const editButton = document.querySelector('.profile__edit-button'); // выбираем в проекте класс кнопки "Войти";
-const avatar = document.querySelector('.profile__avatar');
 const avatarBox = document.querySelector('.profile__avatar-box');
 const cardsContainer = document.querySelector('.elements');
 const inputName = document.querySelector('.popup__input_data_name'); // выбираем в проекте класс первого поля ввода формы в "Попап-окне";
@@ -8,7 +7,8 @@ const inputAbout = document.querySelector('.popup__input_data_about-yourself'); 
 
 const userDataSelector = {
   name: '.profile__title', 
-  about: '.profile__subtitle'
+  about: '.profile__subtitle',
+  avatar: '.profile__avatar'
 };
 
 const validationConfig = { // присваиваем переменной объект с настройками формы, значения ключей - необходимые при валидации названия классов;
@@ -24,7 +24,6 @@ export {addButton,
         userDataSelector, 
         inputName, 
         inputAbout, 
-        avatar, 
         avatarBox, 
         validationConfig, 
         cardsContainer};

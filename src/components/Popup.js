@@ -31,9 +31,8 @@ export class Popup {
 
   setEventListeners() {
     this._closeButton = this._popupElement.querySelector('.popup__button-close'); // выбираем в проекте класс кнопки "Закрыть";
-    this._overlay = document.querySelector('.project-area'); // выбираем в проекте класс тега <body>;
 
     this._closeButton.addEventListener('click', () => this.close());
-    this._overlay.addEventListener('click', this._closePopupByOverlayClick);
+    this._popupElement.addEventListener('click', this._closePopupByOverlayClick);
   }
 }

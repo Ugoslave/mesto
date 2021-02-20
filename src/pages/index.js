@@ -5,12 +5,11 @@ import {addButton,
         userDataSelector, 
         inputName, 
         inputAbout, 
-        avatar, 
         avatarBox, 
         validationConfig, 
         cardsContainer} from '../utils/constants.js'
 
-import {Card} from '../components/card.js';
+import {Card} from '../components/Card.js';
 import {FormValidator} from '../components/FormValidator.js';
 import {Section} from '../components/Section.js';
 import {PopupWithImage} from '../components/PopupWithImage.js';
@@ -18,6 +17,9 @@ import {PopupWithForm} from '../components/PopupWithForm.js';
 import {PopupWithDeleteConfirmation} from '../components/PopupWithDeleteConfirmation.js';
 import {UserInfo} from '../components/UserInfo.js'; 
 import {Api} from '../components/Api.js';
+
+let userId;
+let cardList;
 
 const editformValidation = new FormValidator(validationConfig, '.popup__form');
 editformValidation.enableValidation();  // с помощью метода  класса FormValidator 
@@ -52,12 +54,24 @@ const api = new Api({ // записываем в переменную экзем
   }
 });
 
+function createCard(item) {
+  const card = new Card(item, '.card', popupWithImage, api, popupWithConfirmation, userId); // записываем в переменную экземпляр класса Card (новых карточек);
+  return card.renderCard();
+}
+
+api.getUserData() //вызываем метод класса API для получения данных пользователя с сервера и добавления на страницу
+  .then(res => {
+    inputName.value = res.name;
+    inputAbout.value = res.about;
+    userInfo.setUserInfo(res.name, res.about, res.avatar);
+    userId = res._id;
+  }) 
+  .catch(err => console.log(err));
+
 api.getAllCards() // вызываем метод класса API для загрузки карточек с сервера
   .then(res => {
-    const cardList = new Section({items: res, renderer: (item) => {
-      const card = new Card(item, '.card', popupWithImage, api, popupWithConfirmation); // записываем в переменную экземпляр класса Card (новых карточек);
-      const cardElement = card.renderCard();
-      cardList.addItem(cardElement);
+      cardList = new Section({items: res, renderer: (item) => {
+        cardList.addItem(createCard(item));
       }
     }, cardsContainer);
     
@@ -65,15 +79,12 @@ api.getAllCards() // вызываем метод класса API для заг�
   }) 
   .catch(err => console.log(err));
 
-
 function saveCardOnServer(data) { //объявляем функцию для сохранения карточки на сервере
   showHandlingProcess(true, '.popup_content_add-element');
   
   api.addCard(data) //вызываем метод класса API для добавления на сервер новой карточки
   .then(res => {
-    const card = new Card(res, '.card', popupWithImage, api, popupWithConfirmation); // записываем в переменную экземпляр класса Card (новых карточек);
-    const element = card.renderCard();
-    cardsContainer.prepend(element); // с помощью метода класса отрисовываем карточки в указанном блоке; 
+    cardList.prependItem(createCard(res)); // с помощью метода класса отрисовываем карточки в указанном блоке; 
     popupWithAddForm.close();
   }) 
   .catch(err => console.log(err)) 
@@ -96,7 +107,7 @@ function handleAddCardForm() { // объявляем функцию для об�
 function handleAvatarFormSubmit(avatarLink) { // объявляем функцию для изменения аватара пользователя
   showHandlingProcess(true, '.popup_content_avatar-update');
   api.changeAvatar(avatarLink) //вызываем метод класса API для добавления на сервер новой ссылки на аватар
-     .then(res => avatar.src = res.avatar) 
+     .then(res => userInfo.setUserInfo(res.name, res.about, res.avatar)) 
      .catch(err => console.log(err)) 
      .finally(() => showHandlingProcess(false, '.popup_content_avatar-update', 'Сохранить'));
 
@@ -107,16 +118,6 @@ function handleChangeAvatarForm() {// объявляем функцию для �
   avatarFormValidation.resetInputErrors();
   avatarFormValidation.setButtonState(false);
 }
-
-api.getUserData() //вызываем метод класса API для получения данных пользователя с сервера и добавления на страницу
-  .then(res => {
-    inputName.value = res.name;
-    inputAbout.value = res.about;
-    userInfo.setUserInfo(res.name, res.about);
-    avatar.src = res.avatar;
-  }) 
-  .catch(err => console.log(err));
-
 
 function handleEditFormSubmit(newData) { // объявляем функцию, реализующую сохранение значений полей ввода данных и отправку формы;
   showHandlingProcess(true, '.popup');

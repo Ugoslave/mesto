@@ -5,17 +5,19 @@ export class Api { // создаем и экспортируем класс ра
     this._headers = dataConfig.headers;
   }
 
+  _checkResponse(res) {
+    if (res.ok) {
+      return res.json();
+      } else {
+        return Promise.reject(`ОШИБКА: ${res.status}`);
+    }
+  }
+
   getAllCards() { // метод получения всех карточек с сервера
     return fetch(`${this._url}/cards`, {
       headers: this._headers
     }) 
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-        } else {
-          return Promise.reject('Server is not found');
-      }
-    }) 
+    .then(this._checkResponse) 
   }
 
   addCard(data) { // метод сохранения новой карточки на сервере
@@ -24,13 +26,7 @@ export class Api { // создаем и экспортируем класс ра
       headers: this._headers, 
       body: JSON.stringify(data)
     }) 
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-        } else {
-          return Promise.reject('Server is not found');
-      }
-    }) 
+    .then(this._checkResponse) 
   }
 
   removeElement(id) { // метод удаления карточки с сервера
@@ -38,26 +34,14 @@ export class Api { // создаем и экспортируем класс ра
       method: "DELETE",
       headers: this._headers
     }) 
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-        } else {
-          return Promise.reject('Server is not found');
-      }
-    }) 
+    .then(this._checkResponse) 
   }
 
   getUserData() { // метод получения информации о пользователе с сервера
     return fetch(`${this._url}/users/me`, {
       headers: this._headers
     }) 
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-        } else {
-          return Promise.reject('Server is not found');
-      }
-    }) 
+    .then(this._checkResponse) 
   }
 
   changeUserData(newData) { // метод сохранения новых данных пользователя на сервере
@@ -66,13 +50,7 @@ export class Api { // создаем и экспортируем класс ра
       headers: this._headers, 
       body: JSON.stringify(newData)
     }) 
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-        } else {
-          return Promise.reject('Server is not found');
-      }
-    }) 
+    .then(this._checkResponse) 
   }
 
   changeAvatar(avatarLink) { // метод сохранения новой ссылки на аватар
@@ -81,13 +59,7 @@ export class Api { // создаем и экспортируем класс ра
       headers: this._headers, 
       body: JSON.stringify(avatarLink)
     }) 
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-        } else {
-          return Promise.reject('Server is not found');
-      }
-    }) 
+    .then(this._checkResponse) 
   }
 
   putLikeElement(id) { // метод для добавления лайка 
@@ -95,13 +67,7 @@ export class Api { // создаем и экспортируем класс ра
       method: "PUT",
       headers: this._headers
     }) 
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-        } else {
-          return Promise.reject('Server is not found');
-      }
-    }) 
+    .then(this._checkResponse) 
   }
 
   deleteLikeElement(id) { // метод для снятия лайка
@@ -109,12 +75,6 @@ export class Api { // создаем и экспортируем класс ра
       method: "DELETE",
       headers: this._headers
     }) 
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-        } else {
-          return Promise.reject('Server is not found');
-      }
-    }) 
+    .then(this._checkResponse) 
   }
 }

@@ -1,6 +1,6 @@
 export class Card { // создаем и экспортируем класс карточки
   
-  constructor(data, cardTemplate, handleCardClick, api, popupWithConfirmation) {
+  constructor(data, cardTemplate, handleCardClick, api, popupWithConfirmation, userId) {
     this._cardTemplate = document.querySelector(cardTemplate).content;
     this._name = data.name;
     this._link = data.link;
@@ -10,6 +10,7 @@ export class Card { // создаем и экспортируем класс к�
     this._handleCardClick = handleCardClick.open;
     this._api = api;
     this._popupWithConfirmation = popupWithConfirmation;
+    this._userId = userId;
   }
 
   _getCardTemplate() { // реализуем метод класса, возвращающий шаблон разметки карточки;
@@ -55,9 +56,9 @@ export class Card { // создаем и экспортируем класс к�
     this._likesNumberBox = this._cardElement.querySelector('.element__likes-number');
 
     this._removeCardButton.addEventListener('click', () => {
-      this._popupWithConfirmation.open();
-      this._popupWithConfirmation.setEventListeners(this._removeCard); 
-    }); // подключаем кнопке "Удалить" слушатель для удаления карточки;
+      this._popupWithConfirmation.open(this._removeCard);
+      this._popupWithConfirmation.setEventListeners(); 
+    });  // подключаем кнопке "Удалить" слушатель для удаления карточки;
 
     this._likeButton.addEventListener('click', this._setLikeButton); // подключаем кнопке "Лайк" слушатель для реализации отметки понравившейся карточки;
     this._cardImage.addEventListener('click', () => this._handleCardClick(this._link, this._name)); // подключаем изображению карточке слушатель для открытия попапа с увеличенным изображением;
@@ -71,12 +72,12 @@ export class Card { // создаем и экспортируем класс к�
     this._cardTitle = this._cardElement.querySelector('.element__title');
     this._cardImage = this._cardElement.querySelector('.element__image');
     
-    if (this._owner._id !== '4debc027c95834910283f074') { // проверяем, создавал ли пользователь карточку
+    if (this._owner._id !== this._userId) { // проверяем, создавал ли пользователь карточку
       this._removeCardButton.classList.add('element__remove-button_disactive'); // если не создавал - убираем кнопку "Удалить"
     }
 
     this._check = this._likes.some(item => { // проверяем, поставлен ли пользователем лайк карточке
-      return item["_id"] === "4debc027c95834910283f074";
+      return item["_id"] === this._userId;
     });
 
     if (this._check === true) { // если поставлен - меняем цвет кнопки

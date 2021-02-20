@@ -7,12 +7,14 @@ export class PopupWithDeleteConfirmation extends Popup {
     this._popupForm = document.querySelector(popupSelector).querySelector('.popup__form');
   }
   
-  open = () => {
+  open = (callback) => {
     super.open();
+    this._popupForm.removeEventListener('submit', this._submitHandler);
+    this._submitHandler = callback;
   }
 
-  setEventListeners(callback) {
+  setEventListeners() {
     super.setEventListeners();
-    this._popupForm.addEventListener('submit', callback); // подключаем "слушатель", вызывающий функцию handleFormSubmit при нажатии на кнопку "Сохранить";
+    this._popupForm.addEventListener('submit', this._submitHandler); // подключаем "слушатель", вызывающий функцию handleFormSubmit при нажатии на кнопку "Сохранить";
   }
 }
