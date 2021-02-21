@@ -124,7 +124,7 @@ function handleEditFormSubmit(newData) { // объявляем функцию, �
   
   api.changeUserData(newData) //вызываем метод класса API для сохранения новых данных пользователя на сервере
        .then(res => {
-        userInfo.setUserInfo(res.name, res.about)
+        userInfo.setUserInfo(res.name, res.about, res.avatar)
         }) 
        .catch(err => console.log(err)) 
        .finally(() => showHandlingProcess(false, '.popup', 'Сохранить'));
